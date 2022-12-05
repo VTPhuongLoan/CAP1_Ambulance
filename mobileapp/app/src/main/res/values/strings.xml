@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Ambulance App</string>
+    <string name="action_settings">Settings</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="title_activity_login">LoginActivity</string>
+
+    <string name="find_your_cosmetic">find</string>
+    <string name="account.password.invalid">Password must be > 6 characters</string>
+    <string name="account.fullName.blank">Please enter your Fullname</string>
+    <string name="account.email.invalid">Email address is incorrect format</string>
+    <string name="account.otp.invalid">OTP code is incorrect</string>
+    <string name="account.email.notExists">Email does not exist</string>
+
+    <string name="ad">Lastest traffic accident news today September 13.2022</string>
+    <string name="at">"Attensive care, enthusiastic listening"</string>
+    <string name="medical">Medical Service recommends that you set a strong password (Over 8 characters, including letters, number,special character)</string>
+
+    <string name="api_key">AIzaSyBZCw81fZmRxH_Hqw27_fLOvJ8nnO46KSM</string>
+
+</resources>
