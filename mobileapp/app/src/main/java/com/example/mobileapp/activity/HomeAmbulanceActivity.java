@@ -14,21 +14,23 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.mobileapp.R;
 import com.example.mobileapp.activity.ambulance.AmbulanceActivity;
 import com.example.mobileapp.activity.ambulance.AmbulanceHistoryActivity;
+import com.example.mobileapp.activity.pharmacy.PharmacyActivity;
 import com.example.mobileapp.api.BookingAPI;
 import com.example.mobileapp.api.LocationAPI;
 import com.example.mobileapp.dto.BookingDTO;
@@ -42,8 +44,7 @@ import java.util.List;
 
 public class HomeAmbulanceActivity extends AppCompatActivity implements LocationInterface, LocationListener, BookingInterface {
 
-    TextView textNumberCar, textPoint, textLocation, btnViewList, btnLogout, btnMap;
-    ImageView btnmenu;
+    TextView textNumberCar, textPoint, textLocation, btnViewList, btnMap;
     Switch switchLocation;
 
     CountDownTimer countDownTimer = null;
@@ -57,7 +58,7 @@ public class HomeAmbulanceActivity extends AppCompatActivity implements Location
     // The minimum distance to change Updates in meters
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 5; // 5 meters
     // The minimum time between updates in milliseconds
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 30 * 1; // 30s
+    private static final long MIN_TIME_BW_UPDATES = 1000 * 10 * 1; // 30s
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,24 +68,24 @@ public class HomeAmbulanceActivity extends AppCompatActivity implements Location
         initView();
         click();
 
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(intent);
-            }
-        });
+        // toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // add back arrow to toolbar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(R.string.app_name);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
+        switchLocation.setChecked(false);
+        setBookingActive(false);
 
         switchLocation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                LocationDTO locationDTO = new LocationDTO();
-                locationDTO.setAccountId(Long.parseLong(ContantUtil.authDTO.getAccountId()));
-                locationDTO.setStatus(isChecked);
-
-                LocationAPI locationAPI = new LocationAPI(HomeAmbulanceActivity.this);
-                locationAPI.updateStatus(locationDTO);
+                setBookingActive(isChecked);
             }
         });
 
@@ -93,7 +94,7 @@ public class HomeAmbulanceActivity extends AppCompatActivity implements Location
         bookingAPI.findAllBookingByAmbulanceAndProgress(Long.parseLong(ContantUtil.authDTO.getAccountId()));
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
         // getting GPS status
         gps_enabled = locationManager
                 .isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -113,19 +114,10 @@ public class HomeAmbulanceActivity extends AppCompatActivity implements Location
                     LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES,
                     MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
         }
-        ;
 
     }
 
     private void click() {
-        btnmenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(HomeAmbulanceActivity.this, AmbulanceActivity.class);
-                startActivity(intent);
-            }
-        });
-
         btnViewList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -141,9 +133,6 @@ public class HomeAmbulanceActivity extends AppCompatActivity implements Location
                 startActivity(intent);
             }
         });
-
-        textNumberCar.setText("License plates: " + ContantUtil.authDTO.getNumberPlate());
-
     }
 
     private void initView() {
@@ -151,10 +140,12 @@ public class HomeAmbulanceActivity extends AppCompatActivity implements Location
         textNumberCar = findViewById(R.id.textNumberCar);
         textPoint = findViewById(R.id.textPoint);
         textLocation = findViewById(R.id.textLocation);
-        btnmenu = findViewById(R.id.menu);
         switchLocation = findViewById(R.id.switchLocation);
-        btnLogout = findViewById(R.id.btnLogout);
         btnMap = findViewById(R.id.btnMap);
+
+        if (ContantUtil.authDTO.getNumberPlate() != null) {
+            textNumberCar.setText("License plates: " + ContantUtil.authDTO.getNumberPlate());
+        }
     }
 
     @Override
@@ -259,6 +250,11 @@ public class HomeAmbulanceActivity extends AppCompatActivity implements Location
     @Override
     public void onLocationChanged(Location location) {
         Log.d("LOG_LOCATION", "Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
+        ContantUtil.latitude = location.getLatitude();
+        ContantUtil.longitude = location.getLongitude();
+
+        Toast.makeText(getApplicationContext(), "Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude(),
+                Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -274,6 +270,85 @@ public class HomeAmbulanceActivity extends AppCompatActivity implements Location
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
 //        Log.d("Latitude","status");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (ContantUtil.authDTO.getNumberPlate() != null) {
+            textNumberCar.setText("License plates: " + ContantUtil.authDTO.getNumberPlate());
+        }
+    }
+
+    private void setBookingActive(boolean isChecked) {
+        LocationDTO locationDTO = new LocationDTO();
+        locationDTO.setAccountId(Long.parseLong(ContantUtil.authDTO.getAccountId()));
+        locationDTO.setStatus(isChecked);
+
+        LocationAPI locationAPI = new LocationAPI(HomeAmbulanceActivity.this);
+        locationAPI.updateStatus(locationDTO);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            finish(); // close this activity and return to preview activity (if there is any)
+        }
+
+        if (item.getItemId() == R.id.profile) {
+            Intent intent = null;
+            switch (ContantUtil.roleName) {
+                case "USER":
+                    intent = new Intent(getApplicationContext(), HomeUserActivity.class);
+                    break;
+                case "PHARMACY":
+                    intent = new Intent(getApplicationContext(), PharmacyActivity.class);
+                    break;
+                case "AMBULANCE":
+                    intent = new Intent(getApplicationContext(), AmbulanceActivity.class);
+                    break;
+                default:
+                    intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    break;
+            }
+            startActivity(intent);
+        }
+
+        if (item.getItemId() == R.id.logout) {
+            // show message
+            AlertDialog.Builder builder = new AlertDialog.Builder(HomeAmbulanceActivity.this);
+
+            // Setting message manually and performing action on button click
+            builder.setMessage("Are you sure you want to log out?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            finish(); // close this activity and return to preview activity (if there is any)
+                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                            startActivity(intent);
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            // Creating dialog box
+            AlertDialog alert = builder.create();
+            // Setting the title manually
+            alert.setTitle("Ambulance Booking");
+            alert.show();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

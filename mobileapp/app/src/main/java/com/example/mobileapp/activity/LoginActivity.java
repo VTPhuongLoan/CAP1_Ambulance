@@ -5,8 +5,10 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,6 +46,17 @@ public class LoginActivity extends AppCompatActivity implements LoginInterface, 
 
         initView();
         click();
+
+        // toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // add back arrow to toolbar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(R.string.app_name);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            getSupportActionBar().setDisplayShowHomeEnabled(false);
+        }
     }
 
     private void initView() {
@@ -142,8 +155,6 @@ public class LoginActivity extends AppCompatActivity implements LoginInterface, 
                 });
 
         Toast.makeText(LoginActivity.this, "Hello, " + authDTO.getEmail(), Toast.LENGTH_LONG).show();
-
-        finish();
     }
 
     @Override
@@ -159,6 +170,11 @@ public class LoginActivity extends AppCompatActivity implements LoginInterface, 
     @Override
     public void onError(List<String> errors) {
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
     }
 
 }

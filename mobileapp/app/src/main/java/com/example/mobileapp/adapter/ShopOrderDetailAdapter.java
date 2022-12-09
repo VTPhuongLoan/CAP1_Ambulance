@@ -42,7 +42,7 @@ public class ShopOrderDetailAdapter extends RecyclerView.Adapter<ShopOrderDetail
     public void onBindViewHolder(@NonNull ProductViewhoder holder, @SuppressLint("RecyclerView") int position) {
         OrderDetails orders = list.get(position);
 
-        double total = Double.parseDouble(orders.getQuantity()) * Double.parseDouble(orders.getPrice());
+        double total = Double.parseDouble(orders.getQuantity()) * Double.parseDouble(orders.getPrice().replace(",", ""));
 
         holder.textName.setText(orders.getProductDTO().getName());
         holder.textQty.setText(String.valueOf(orders.getQuantity()));

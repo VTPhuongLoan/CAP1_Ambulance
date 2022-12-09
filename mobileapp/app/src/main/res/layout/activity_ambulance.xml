@@ -7,16 +7,34 @@
     android:background="@color/back"
     tools:context=".activity.ambulance.AmbulanceActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.Mobileapp.AppBarOverlay"
+        tools:ignore="MissingConstraints">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/Theme.Mobileapp.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingBottom="70dp">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -25,32 +43,30 @@
                     android:id="@+id/imageView7"
                     android:layout_width="80dp"
                     android:layout_height="124dp"
-                    app:civ_border_color="@color/white"
-                    app:civ_border_width="1dp"
                     android:layout_marginStart="60dp"
                     android:layout_marginTop="30dp"
+                    app:civ_border_color="@color/white"
+                    app:civ_border_width="1dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/person" />
 
                 <TextView
-                    android:id="@+id/nameuserpro"
+                    android:id="@+id/textHello"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
                     android:layout_marginStart="15dp"
-                    android:text="Hi! Nguyen Thi"
+                    android:layout_marginTop="30dp"
+                    android:text="Hi! Ambulance"
                     android:textColor="#000"
                     android:textSize="20sp"
                     android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageView7"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraint"
@@ -199,9 +215,9 @@
                     android:layout_marginStart="35dp"
                     android:layout_marginTop="20dp"
                     android:text="Change your password"
+                    android:textColor="@color/main"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="@color/main"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/inputNumberPlate" />
 
@@ -212,18 +228,21 @@
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="30dp"
                     android:layout_marginEnd="32dp"
+                    android:layout_marginBottom="40dp"
                     android:background="@drawable/btn_getstart"
                     android:gravity="center"
                     android:text="SAVE"
                     android:textColor="@color/white"
                     android:textSize="20dp"
                     android:textStyle="bold"
-                    android:layout_marginBottom="40dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textChangePass" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </LinearLayout>
+
     </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

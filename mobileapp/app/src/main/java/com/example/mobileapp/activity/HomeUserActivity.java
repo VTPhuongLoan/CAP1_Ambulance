@@ -1,30 +1,36 @@
 package com.example.mobileapp.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.mobileapp.R;
+import com.example.mobileapp.activity.ambulance.AmbulanceActivity;
+import com.example.mobileapp.activity.ambulance.AmbulanceBookingSosActivity;
+import com.example.mobileapp.activity.pharmacy.PharmacyActivity;
 import com.example.mobileapp.activity.user.ShopPharmacyActivity;
 import com.example.mobileapp.activity.user.UserBookAmbulanceActivity;
 import com.example.mobileapp.activity.user.UserCheckoutActivity;
 import com.example.mobileapp.activity.user.UserHistoryBookingActivity;
 import com.example.mobileapp.activity.user.UserHistoryPharmacyActivity;
+import com.example.mobileapp.util.ContantUtil;
 
 public class HomeUserActivity extends AppCompatActivity {
 
-    LinearLayout btnperson,btnsos,btnloca,btnambu,btnhospital;
-    LinearLayout sos;
-    ConstraintLayout constraint;
+    LinearLayout linearAmbulance, linearPharmacy;
+    LinearLayout linearSos;
 
-    LinearLayout btnHistoryPharmacy;
-
-    TextView btnLogout;
+    LinearLayout linearHistoryPharmacy, linearHistoryAmbulance, linearMessage, linearProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,22 +39,32 @@ public class HomeUserActivity extends AppCompatActivity {
 
         initView();
         click();
+
+        // toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // add back arrow to toolbar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(R.string.app_name);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
     }
 
     private void initView() {
-        btnperson = findViewById(R.id.personbtn);
-        btnsos = findViewById(R.id.sosbtn);
-        btnloca = findViewById(R.id.linearlocation);
-        btnambu = findViewById(R.id.linearambulance);
-        sos = findViewById(R.id.linearsos);
-        constraint = findViewById(R.id.constraint);
-        btnhospital = findViewById(R.id.locationbtn);
-        btnLogout = findViewById(R.id.btnLogout);
-        btnHistoryPharmacy = findViewById(R.id.btnHistoryPharmacy);
+        linearAmbulance = findViewById(R.id.linearAmbulance);
+        linearPharmacy = findViewById(R.id.linearPharmacy);
+        linearHistoryPharmacy = findViewById(R.id.linearHistoryPharmacy);
+        linearHistoryAmbulance = findViewById(R.id.linearHistoryAmbulance);
+        linearMessage = findViewById(R.id.linearMessage);
+        linearProfile = findViewById(R.id.linearProfile);
+
+        linearSos = findViewById(R.id.linearSos);
     }
 
     private void click() {
-        btnperson.setOnClickListener(new View.OnClickListener() {
+        linearAmbulance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                Intent intentperson = new Intent(HomeUserActivity.this, DashboardActivity.class);
@@ -56,54 +72,15 @@ public class HomeUserActivity extends AppCompatActivity {
             }
         });
 
-        btnsos.setOnClickListener(new View.OnClickListener() {
+        linearPharmacy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intentsos = new Intent(HomeUserActivity.this, NotiActivity.class);
-//                startActivity(intentsos);
-            }
-        });
-
-        btnloca.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentloca = new Intent(HomeUserActivity.this, ShopPharmacyActivity.class);
-                startActivity(intentloca);
-            }
-        });
-
-        btnambu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentambu = new Intent(HomeUserActivity.this, UserBookAmbulanceActivity.class);
-                startActivity(intentambu);
-            }
-        });
-
-        sos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Intent intentso = new Intent(HomeUserActivity.this, SendSOSActivity.class);
-//                startActivity(intentso);
-            }
-        });
-        constraint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Intent intent = new Intent(HomeUserActivity.this, NotiActivity.class);
-//                startActivity(intent);
-            }
-        });
-        btnhospital.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(HomeUserActivity.this, UserHistoryBookingActivity.class);
+                Intent intent = new Intent(HomeUserActivity.this, ShopPharmacyActivity.class);
                 startActivity(intent);
             }
         });
 
-
-        btnHistoryPharmacy.setOnClickListener(new View.OnClickListener() {
+        linearHistoryPharmacy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeUserActivity.this, UserHistoryPharmacyActivity.class);
@@ -111,14 +88,98 @@ public class HomeUserActivity extends AppCompatActivity {
             }
         });
 
-        btnLogout.setOnClickListener(new View.OnClickListener() {
+        linearHistoryAmbulance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                Intent intent = new Intent(HomeUserActivity.this, UserHistoryBookingActivity.class);
                 startActivity(intent);
             }
         });
+
+        linearMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeUserActivity.this, MessageActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        linearProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Intent intent = new Intent(HomeUserActivity.this, UserHistoryBookingActivity.class);
+//                startActivity(intent);
+            }
+        });
+
+        linearSos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeUserActivity.this, AmbulanceBookingSosActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            finish(); // close this activity and return to preview activity (if there is any)
+        }
+
+        if (item.getItemId() == R.id.profile) {
+            Intent intent = null;
+            switch (ContantUtil.roleName) {
+                case "USER":
+                    intent = new Intent(getApplicationContext(), HomeUserActivity.class);
+                    break;
+                case "PHARMACY":
+                    intent = new Intent(getApplicationContext(), PharmacyActivity.class);
+                    break;
+                case "AMBULANCE":
+                    intent = new Intent(getApplicationContext(), AmbulanceActivity.class);
+                    break;
+                default:
+                    intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    break;
+            }
+            startActivity(intent);
+        }
+
+        if (item.getItemId() == R.id.logout) {
+            // show message
+            AlertDialog.Builder builder = new AlertDialog.Builder(HomeUserActivity.this);
+
+            // Setting message manually and performing action on button click
+            builder.setMessage("Are you sure you want to log out?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            finish(); // close this activity and return to preview activity (if there is any)
+                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                            startActivity(intent);
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            // Creating dialog box
+            AlertDialog alert = builder.create();
+            // Setting the title manually
+            alert.setTitle("Ambulance Booking");
+            alert.show();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

@@ -2,6 +2,7 @@ package com.example.mobileapp.util;
 
 import com.example.mobileapp.dto.AuthDTO;
 import com.example.mobileapp.dto.BookingDTO;
+import com.example.mobileapp.dto.MessageDTO;
 import com.example.mobileapp.dto.RegisterDTO;
 import com.example.mobileapp.model.Orders;
 import com.example.mobileapp.model.Product;
@@ -18,6 +19,13 @@ public class ContantUtil {
     public static AuthDTO authDTO = null;
     public static String roleName = null;
 
+    // message
+    public static List<MessageDTO> messageList = null;
+
+    // latitude
+    public static double latitude = 10.848502;
+    public static double longitude = 106.7735599;
+
     public static long pharmacyId = 0;
 
     // order
@@ -29,6 +37,10 @@ public class ContantUtil {
 
     // cart
     public static Map<Long, Product> hashMapCart = new HashMap();
+
+    public static void clearToCart() {
+        hashMapCart = new HashMap();
+    }
 
     public static void addToCart(long productId, Product product) {
         if (hashMapCart == null) {
@@ -108,6 +120,14 @@ public class ContantUtil {
         }
 
         return product;
+    }
+
+    public static void addMessage(MessageDTO message) {
+        if (messageList == null) {
+            messageList = new ArrayList<>();
+        }
+
+        messageList.add(message);
     }
 
 }

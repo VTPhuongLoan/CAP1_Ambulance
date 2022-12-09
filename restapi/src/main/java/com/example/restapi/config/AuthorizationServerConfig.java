@@ -110,11 +110,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 Pharmacy pharmacy = pharmacyService.findByAccountId(user.getId());
                 if (!ObjectUtils.isEmpty(pharmacy)) {
                     info.put("pharmacyId", pharmacy.getId());
+                    info.put("pharmacyName", pharmacy.getName());
                 }
                 Ambulance ambulance = ambulanceService.findByAccount(user);
                 if (!ObjectUtils.isEmpty(ambulance)) {
                     info.put("ambulanceId", ambulance.getId());
                     info.put("numberPlate", ambulance.getNumberPlate());
+                    info.put("ambulanceName", ambulance.getName());
                 }
                 info.put("accountId", user.getId());
                 info.put("username", user.getUsername());

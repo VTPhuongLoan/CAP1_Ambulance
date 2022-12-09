@@ -53,7 +53,7 @@ public class MessageController {
 
         model.addAttribute("messageManagerDTO", new MessageManagerDTO());
         model.addAttribute("errors", new HashMap<>());
-        return "message";
+        return "message_form";
     }
 
     @GetMapping(value = {"/form/{id}"})
@@ -79,7 +79,7 @@ public class MessageController {
                     status.equalsIgnoreCase("success") ? "Data update successful!" : "Please check the information again!"));
         }
 
-        return "message";
+        return "message_form";
     }
 
     @PostMapping(value = "/form/save")
@@ -89,7 +89,7 @@ public class MessageController {
         if (token == null) {
             model.addAttribute("messageManagerDTO", new MessageManagerDTO());
             model.addAttribute("error", "error");
-            return "message";
+            return "message_form";
         }
 
         Map<String, String> errorList = new HashMap<>();

@@ -1,23 +1,22 @@
 package com.example.mobileapp.activity.ambulance;
 
-import android.Manifest;
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.mobileapp.R;
+import com.example.mobileapp.activity.HomeUserActivity;
+import com.example.mobileapp.activity.LoginActivity;
 import com.example.mobileapp.activity.pharmacy.PharmacyActivity;
 import com.example.mobileapp.api.ProfileAPI;
 import com.example.mobileapp.dto.ProfileDTO;
@@ -29,7 +28,7 @@ import java.util.List;
 
 public class AmbulanceActivity extends AppCompatActivity implements ProfileInterface {
 
-    TextView textMsg, btnSubmit;
+    TextView textHello, textMsg, btnSubmit;
     EditText inputFullName, inputEmail, inputPhone, inputAddress, inputNumberPlate;
 
     @Override
@@ -40,20 +39,25 @@ public class AmbulanceActivity extends AppCompatActivity implements ProfileInter
         initView();
         click();
 
+        // toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // add back arrow to toolbar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(R.string.app_name);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
         ProfileAPI profileAPI = new ProfileAPI(AmbulanceActivity.this);
         profileAPI.findProfileByAccountId(Long.parseLong(ContantUtil.authDTO.getAccountId()));
-
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return super.onSupportNavigateUp();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
     }
 
     private void click() {
@@ -81,6 +85,7 @@ public class AmbulanceActivity extends AppCompatActivity implements ProfileInter
     }
 
     private void initView() {
+        textHello = findViewById(R.id.textHello);
         btnSubmit = findViewById(R.id.btnSubmit);
         textMsg = findViewById(R.id.textMsg);
         inputFullName = findViewById(R.id.inputFullName);
@@ -91,11 +96,13 @@ public class AmbulanceActivity extends AppCompatActivity implements ProfileInter
     }
 
     private void initData(Account account) {
-        inputFullName.setText(account.getFullName());
+        inputFullName.setText(account.getAmbulanceName());
         inputEmail.setText(account.getEmail());
         inputPhone.setText(account.getPhone());
         inputAddress.setText(account.getAddress());
         inputNumberPlate.setText(account.getNumberPlate());
+        textHello.setText("Hi! " + account.getAmbulanceName());
+        ContantUtil.authDTO.setNumberPlate(account.getNumberPlate());
     }
 
     @Override
@@ -123,6 +130,67 @@ public class AmbulanceActivity extends AppCompatActivity implements ProfileInter
         } catch (Exception ex) {
             return "";
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            finish(); // close this activity and return to preview activity (if there is any)
+        }
+
+        if (item.getItemId() == R.id.profile) {
+            Intent intent = null;
+            switch (ContantUtil.roleName) {
+                case "USER":
+                    intent = new Intent(getApplicationContext(), HomeUserActivity.class);
+                    break;
+                case "PHARMACY":
+                    intent = new Intent(getApplicationContext(), PharmacyActivity.class);
+                    break;
+                case "AMBULANCE":
+                    intent = new Intent(getApplicationContext(), AmbulanceActivity.class);
+                    break;
+                default:
+                    intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    break;
+            }
+            startActivity(intent);
+        }
+
+        if (item.getItemId() == R.id.logout) {
+            // show message
+            AlertDialog.Builder builder = new AlertDialog.Builder(AmbulanceActivity.this);
+
+            // Setting message manually and performing action on button click
+            builder.setMessage("Are you sure you want to log out?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            finish(); // close this activity and return to preview activity (if there is any)
+                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                            startActivity(intent);
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            // Creating dialog box
+            AlertDialog alert = builder.create();
+            // Setting the title manually
+            alert.setTitle("Ambulance Booking");
+            alert.show();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

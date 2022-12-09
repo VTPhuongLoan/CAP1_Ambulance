@@ -2,16 +2,18 @@ package com.example.mobileapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.mobileapp.R;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    TextView btnuser, btnambulan, btnphar;
+    private TextView btnUser, btnAmbulance, btnPharmacy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,41 +22,62 @@ public class RegisterActivity extends AppCompatActivity {
 
         initView();
         click();
+
+        // toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // add back arrow to toolbar
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
     }
 
     private void initView() {
-        btnuser = findViewById(R.id.textuser);
-        btnambulan = findViewById(R.id.textambulance);
-        btnphar = findViewById(R.id.textphar);
+        btnUser = findViewById(R.id.btnUser);
+        btnAmbulance = findViewById(R.id.btnAmbulance);
+        btnPharmacy = findViewById(R.id.btnPharmacy);
     }
 
     private void click() {
-        btnuser.setOnClickListener(new View.OnClickListener() {
+        btnUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RegisterActivity.this, SignUpActivity.class);
-                intent.putExtra("roleName", "USER");
-                startActivity(intent);
+                navigateToSignUp("USER");
             }
         });
 
-        btnambulan.setOnClickListener(new View.OnClickListener() {
+        btnAmbulance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RegisterActivity.this, SignUpActivity.class);
-                intent.putExtra("roleName", "AMBULANCE");
-                startActivity(intent);
+                navigateToSignUp("AMBULANCE");
             }
         });
 
-        btnphar.setOnClickListener(new View.OnClickListener() {
+        btnPharmacy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RegisterActivity.this, SignUpActivity.class);
-                intent.putExtra("roleName", "PHARMACY");
-                startActivity(intent);
+                navigateToSignUp("PHARMACY");
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            finish(); // close this activity and return to preview activity (if there is any)
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void navigateToSignUp(String roleName) {
+        Intent intent = new Intent(RegisterActivity.this, SignUpActivity.class);
+        intent.putExtra("roleName", roleName);
+        startActivity(intent);
+        finish();
     }
 
 }

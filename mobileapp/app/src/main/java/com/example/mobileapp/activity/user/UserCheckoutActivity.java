@@ -52,7 +52,7 @@ public class UserCheckoutActivity extends AppCompatActivity implements CheckoutI
         // set total
         if (productList != null) {
             for (Product product : productList) {
-                total += Double.parseDouble(product.getPrice()) * product.getQty();
+                total += Double.parseDouble(product.getPrice().replace(",", "")) * product.getQty();
             }
         }
         textTotal.setText(String.valueOf(total));
@@ -72,7 +72,7 @@ public class UserCheckoutActivity extends AppCompatActivity implements CheckoutI
                     for (Product product : productList) {
                         OrderDetailsDTO orderDetailsDTO = new OrderDetailsDTO();
                         orderDetailsDTO.setProductId(product.getId());
-                        orderDetailsDTO.setPrice(Double.parseDouble(product.getPrice()));
+                        orderDetailsDTO.setPrice(Double.parseDouble(product.getPrice().replace(",", "")));
                         orderDetailsDTO.setQuantity(product.getQty());
                         ordersDTOS.add(orderDetailsDTO);
                     }
@@ -98,7 +98,7 @@ public class UserCheckoutActivity extends AppCompatActivity implements CheckoutI
     @Override
     public void onSuccessOrder() {
         finish();
-        Intent intent = new Intent(getApplicationContext(), HomeUserActivity.class);
+        Intent intent = new Intent(getApplicationContext(), UserHistoryPharmacyActivity.class);
         startActivity(intent);
     }
 

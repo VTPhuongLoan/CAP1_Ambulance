@@ -57,6 +57,12 @@ public class ShopProductAdapter extends RecyclerView.Adapter<ShopProductAdapter.
         holder.textName.setText(product.getName());
         holder.textPrice.setText(product.getPrice());
 
+        if (!product.isOtc()) {
+            holder.textName.setTextColor(Color.parseColor("#FF000000"));
+        } else {
+            holder.textName.setTextColor(Color.parseColor("#FF0000"));
+        }
+
         holder.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,16 +83,16 @@ public class ShopProductAdapter extends RecyclerView.Adapter<ShopProductAdapter.
                     alert.setTitle("Message");
                     alert.show();
                 } else {
+                    product.setAddToCart(!product.isAddToCart());
                     if (product.isAddToCart()) {
                         holder.btnAdd.setText("Remove");
                         holder.btnAdd.setTextColor(Color.RED);
-                        ContantUtil.deleteToCart(product.getId());
+                        ContantUtil.addToCart(product.getId(), product);
                     } else {
                         holder.btnAdd.setText("Add to cart");
                         holder.btnAdd.setTextColor(Color.BLUE);
-                        ContantUtil.addToCart(product.getId(), product);
+                        ContantUtil.deleteToCart(product.getId());
                     }
-                    product.setAddToCart(!product.isAddToCart());
                 }
             }
         });

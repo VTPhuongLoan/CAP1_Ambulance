@@ -2,6 +2,7 @@ package com.example.mobileapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.mobileapp.R;
 import com.example.mobileapp.api.ForgotPassAPI;
@@ -19,9 +21,9 @@ import java.util.List;
 
 public class ForgetPasswordActivity extends AppCompatActivity implements ForgotPassInterface {
 
-    Button btnSubmit;
-    EditText inputUsername;
-    TextView btnLogin, textMsg;
+    private Button btnSubmit;
+    private EditText inputUsername;
+    private TextView btnSignIn, textMsg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,16 @@ public class ForgetPasswordActivity extends AppCompatActivity implements ForgotP
 
         initView();
         click();
+
+        // toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // add back arrow to toolbar
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
     }
 
     private void click() {
@@ -49,11 +61,11 @@ public class ForgetPasswordActivity extends AppCompatActivity implements ForgotP
             }
         });
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
-                Intent intentlogin = new Intent(ForgetPasswordActivity.this, LoginActivity.class);
+                Intent intentlogin = new Intent(ForgetPasswordActivity.this, RegisterActivity.class);
                 startActivity(intentlogin);
             }
         });
@@ -62,7 +74,7 @@ public class ForgetPasswordActivity extends AppCompatActivity implements ForgotP
     private void initView() {
         inputUsername = findViewById(R.id.inputUsername);
         btnSubmit = findViewById(R.id.btnSubmit);
-        btnLogin = findViewById(R.id.btnLogin);
+        btnSignIn = findViewById(R.id.btnSignIn);
 
         textMsg = findViewById(R.id.textMsg);
     }
@@ -99,6 +111,16 @@ public class ForgetPasswordActivity extends AppCompatActivity implements ForgotP
         }
 
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            finish(); // close this activity and return to preview activity (if there is any)
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

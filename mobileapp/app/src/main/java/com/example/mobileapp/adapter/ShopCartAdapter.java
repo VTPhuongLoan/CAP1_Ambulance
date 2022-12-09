@@ -50,7 +50,7 @@ public class ShopCartAdapter extends RecyclerView.Adapter<ShopCartAdapter.Produc
         holder.textName.setText(product.getName());
         holder.textQty.setText(String.valueOf(product.getQty()));
         holder.textPrice.setText(String.valueOf(product.getPrice()));
-        double total = Double.parseDouble(product.getPrice()) * product.getQty();
+        double total = Double.parseDouble(product.getPrice().replace(",", "")) * product.getQty();
         holder.textTotal.setText(String.valueOf(total));
 
         if (isUpdate) {
@@ -66,7 +66,7 @@ public class ShopCartAdapter extends RecyclerView.Adapter<ShopCartAdapter.Produc
                         product.setQty(p.getQty());
                         holder.textQty.setText(String.valueOf(product.getQty()));
 
-                        double total = Double.parseDouble(product.getPrice()) * product.getQty();
+                        double total = Double.parseDouble(product.getPrice().replace(",", "")) * product.getQty();
                         holder.textTotal.setText(String.valueOf(total));
                     }
                 }
@@ -81,7 +81,7 @@ public class ShopCartAdapter extends RecyclerView.Adapter<ShopCartAdapter.Produc
                         product.setQty(p.getQty());
                         holder.textQty.setText(String.valueOf(product.getQty()));
 
-                        double total = Double.parseDouble(product.getPrice()) * product.getQty();
+                        double total = Double.parseDouble(product.getPrice().replace(",", "")) * product.getQty();
                         holder.textTotal.setText(String.valueOf(total));
                     }
                 }

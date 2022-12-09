@@ -11,8 +11,13 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.mobileapp.R;
+import com.example.mobileapp.dto.MessageDTO;
+import com.example.mobileapp.util.ContantUtil;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+
+import java.util.Date;
+import java.util.UUID;
 
 public class PushMessagingService extends FirebaseMessagingService {
 
@@ -35,7 +40,7 @@ public class PushMessagingService extends FirebaseMessagingService {
                 NotificationManager.IMPORTANCE_HIGH);
         getSystemService(NotificationManager.class).createNotificationChannel(channel);
         Notification.Builder notiBuilder = new Notification.Builder(this, CHANNEL_ID)
-                                            .setContentTitle(title)
+                                            .setContentTitle(title.replace("||MSG||", ""))
                                             .setContentText(body)
                                             .setSmallIcon(R.mipmap.ic_launcher)
                                             .setAutoCancel(true);
@@ -47,6 +52,14 @@ public class PushMessagingService extends FirebaseMessagingService {
             intent.putExtra("body", body);
             broadcaster.sendBroadcast(intent);
         }
+
+        // save
+        MessageDTO msg = new MessageDTO();
+        msg.setId(UUID.randomUUID().toString());
+        msg.setTitle(title);
+        msg.setContent(body);
+        msg.setTime(new Date());
+        ContantUtil.addMessage(msg);
 
         super.onMessageReceived(message);
     }

@@ -2,6 +2,7 @@ package com.example.mobileapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.mobileapp.R;
 import com.example.mobileapp.api.RegisterAPI;
@@ -20,10 +22,10 @@ import java.util.List;
 
 public class SendCodeActivity extends AppCompatActivity implements RegisterInterface {
 
-    EditText code1, code2, code3, code4;
-    TextView textMsg;
-    Button btnconfirm;
-    RegisterDTO registerDTO = null;
+    private EditText code1, code2, code3, code4;
+    private TextView textMsg;
+    private Button btnconfirm;
+    private RegisterDTO registerDTO = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +34,17 @@ public class SendCodeActivity extends AppCompatActivity implements RegisterInter
 
         initView();
         click();
-    }
 
+        // toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // add back arrow to toolbar
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+    }
 
     private void initView() {
         btnconfirm = findViewById(R.id.btnconfirm);
@@ -80,7 +91,7 @@ public class SendCodeActivity extends AppCompatActivity implements RegisterInter
     @Override
     public void onSuccess() {
         finish();
-        Intent intent =  new Intent(getApplicationContext(), CompleteActivity.class);
+        Intent intent =  new Intent(getApplicationContext(), CompleteSignUpActivity.class);
         startActivity(intent);
     }
 
@@ -99,6 +110,16 @@ public class SendCodeActivity extends AppCompatActivity implements RegisterInter
         String packageName = getPackageName();
         int resId = getResources().getIdentifier(aString, "string", packageName);
         return getString(resId);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            finish(); // close this activity and return to preview activity (if there is any)
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

@@ -36,6 +36,9 @@ public class ProfileController {
     AmbulanceService ambulanceService;
 
     @Autowired
+    PharmacyService pharmacyService;
+
+    @Autowired
     EmailService emailService;
 
     @Autowired
@@ -88,12 +91,22 @@ public class ProfileController {
             account.setPhone(profileDTO.getPhone());
             account.setAddress(profileDTO.getAddress());
             accountService.save(account);
+
+            // ambulance
             Ambulance ambulance = ambulanceService.findByAccount(account);
-            if(!ObjectUtils.isEmpty(ambulance)) {
+            if (!ObjectUtils.isEmpty(ambulance)) {
                 ambulance.setNumberPlate(profileDTO.getNumberPlate());
                 ambulanceService.save(ambulance);
             }
+
+            // pharmacy
+            Pharmacy pharmacy = pharmacyService.findByAccountId(account.getId());
+            if (!ObjectUtils.isEmpty(pharmacy)) {
+                pharmacy.setName(profileDTO.getFullName());
+                pharmacyService.save(pharmacy);
+            }
         }
+
         AccountDTO accountDTO = accountMapper.toDTO(account);
         accountDTO.setNumberPlate(profileDTO.getNumberPlate());
         restReponse.ok(accountDTO);

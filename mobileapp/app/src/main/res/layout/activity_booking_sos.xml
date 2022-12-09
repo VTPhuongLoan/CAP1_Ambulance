@@ -7,11 +7,27 @@
     android:background="#DCDCDC"
     tools:context=".activity.ambulance.AmbulanceBookingSosActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.Mobileapp.AppBarOverlay"
+        tools:ignore="MissingConstraints">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/Theme.Mobileapp.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <TextView
         android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sending SOS Alert in"
+        android:text="AMBULANCE BOOKING"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="30sp"
@@ -28,7 +44,7 @@
         android:textColor="#FF0000"
         android:textStyle="bold"
         android:textSize="60sp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="70dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageView1" />
@@ -54,7 +70,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="100dp"
         android:background="@drawable/btn_getstart"
         android:text="Cancel"

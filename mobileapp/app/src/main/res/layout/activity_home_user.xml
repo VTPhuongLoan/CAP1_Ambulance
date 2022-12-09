@@ -6,6 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".activity.HomeUserActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.Mobileapp.AppBarOverlay"
+        tools:ignore="MissingConstraints">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/Theme.Mobileapp.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <ScrollView
         android:id="@+id/scrollView5"
         android:layout_width="match_parent"
@@ -15,29 +31,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraint"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/admin"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="60dp"
-                    android:background="@color/purple_200"
-                    android:paddingStart="30dp"
-                    android:text="@string/ad"
-                    android:textColor="#000"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -52,7 +45,7 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
-                        android:id="@+id/linearambulance"
+                        android:id="@+id/linearAmbulance"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -72,6 +65,7 @@
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:srcCompat="@drawable/ambulance" />
+
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <TextView
@@ -87,7 +81,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/linearlocation"
+                        android:id="@+id/linearPharmacy"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -168,7 +162,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/linearsos"
+                        android:id="@+id/linearSos"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -208,40 +202,6 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="70dp"
-                    android:layout_marginBottom="16dp"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@color/white"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/btnLogout"
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="32dp"
-                            android:layout_marginTop="30dp"
-                            android:layout_marginEnd="32dp"
-                            android:background="@drawable/btn_getstart"
-                            android:gravity="center"
-                            android:text="Logout"
-                            android:textColor="@color/white"
-                            android:textSize="20dp"
-                            android:textStyle="bold"
-                            android:layout_marginBottom="40dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
             </LinearLayout>
 
         </LinearLayout>
@@ -270,7 +230,7 @@
                 android:layout_height="wrap_content">
 
                 <LinearLayout
-                    android:id="@+id/btnHistoryPharmacy"
+                    android:id="@+id/linearHistoryPharmacy"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
@@ -285,7 +245,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/locationbtn"
+                    android:id="@+id/linearHistoryAmbulance"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
@@ -300,7 +260,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/sosbtn"
+                    android:id="@+id/linearMessage"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
@@ -315,7 +275,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/personbtn"
+                    android:id="@+id/linearProfile"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"

@@ -9,14 +9,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mobileapp.R;
 
-public class CompleteActivity extends AppCompatActivity {
+public class CompleteSignUpActivity extends AppCompatActivity {
 
     TextView btnLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_complete);
+        setContentView(R.layout.activity_complete_signup);
 
         initView();
         click();

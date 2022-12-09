@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -53,17 +54,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public void onBindViewHolder(@NonNull ProductViewhoder holder, @SuppressLint("RecyclerView") int position) {
         Product product = list.get(position);
 
-        holder.categoryName.setText(product.getName());
+        holder.title.setText(product.getName());
         holder.price.setText(product.getPrice());
 
-        holder.main.setOnClickListener(v -> {
-            Intent intent = new Intent(holder.itemView.getContext(), ProductListActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("object_pro", list.get(position));
-            intent.putExtras(bundle);
-            holder.itemView.getContext().startActivity(intent);
-
-        });
+        if (!product.isOtc()) {
+            holder.title.setTextColor(Color.parseColor("#FF000000"));
+        } else {
+            holder.title.setTextColor(Color.parseColor("#FF0000"));
+        }
 
         holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,16 +130,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     }
 
     public class ProductViewhoder extends RecyclerView.ViewHolder {
-        TextView categoryName, price, edit, delete;
+
+        TextView title, price, edit, delete;
         ImageView imagePic;
-        ConstraintLayout main;
 
         public ProductViewhoder(@NonNull View itemView) {
             super(itemView);
-            categoryName = itemView.findViewById(R.id.title);
+            title = itemView.findViewById(R.id.title);
             price = itemView.findViewById(R.id.fee);
             imagePic = itemView.findViewById(R.id.pic);
-            main = itemView.findViewById(R.id.mainPopular);
             edit = itemView.findViewById(R.id.editbtn);
             delete = itemView.findViewById(R.id.deletebtn);
         }

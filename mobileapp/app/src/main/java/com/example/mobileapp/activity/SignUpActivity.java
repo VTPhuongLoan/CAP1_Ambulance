@@ -2,6 +2,7 @@ package com.example.mobileapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.mobileapp.R;
 import com.example.mobileapp.api.RegisterAPI;
@@ -21,15 +23,14 @@ import java.util.List;
 
 public class SignUpActivity extends AppCompatActivity implements RegisterInterface {
 
-    EditText inputName;
-    EditText inputUsername;
-    TextInputEditText inputPassword;
-    TextView btnLogin, textMsg;
-    Button btnSignup;
+    private EditText inputName, inputUsername;
+    private TextInputEditText inputPassword;
+    private TextView btnLogin, textMsg;
+    private Button btnSignup;
 
-    String roleName = "";
+    private String roleName = "";
 
-    RegisterDTO registerDTO = null;
+    private RegisterDTO registerDTO = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,15 @@ public class SignUpActivity extends AppCompatActivity implements RegisterInterfa
         Intent intent = getIntent();
         roleName = intent.getStringExtra("roleName");
 
-        Toast.makeText(SignUpActivity.this, roleName, Toast.LENGTH_SHORT).show();
+        // toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // add back arrow to toolbar
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
     }
 
     private void initView() {
@@ -60,6 +69,7 @@ public class SignUpActivity extends AppCompatActivity implements RegisterInterfa
             public void onClick(View view) {
                 Intent intentregister = new Intent(SignUpActivity.this, LoginActivity.class);
                 startActivity(intentregister);
+                finish();
             }
         });
 
@@ -124,6 +134,16 @@ public class SignUpActivity extends AppCompatActivity implements RegisterInterfa
         } catch (Exception ex) {
             return "";
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            finish(); // close this activity and return to preview activity (if there is any)
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

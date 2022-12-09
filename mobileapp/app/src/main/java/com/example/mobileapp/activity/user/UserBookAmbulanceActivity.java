@@ -1,7 +1,9 @@
 package com.example.mobileapp.activity.user;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -11,18 +13,26 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
 import com.example.mobileapp.R;
+import com.example.mobileapp.activity.HomeUserActivity;
 import com.example.mobileapp.activity.LoginActivity;
+import com.example.mobileapp.activity.MapsActivity;
+import com.example.mobileapp.activity.ambulance.AmbulanceActivity;
 import com.example.mobileapp.activity.ambulance.AmbulanceBookingSosActivity;
+import com.example.mobileapp.activity.pharmacy.PharmacyActivity;
 import com.example.mobileapp.api.CheckoutAPI;
 import com.example.mobileapp.dto.BookingDTO;
 import com.example.mobileapp.itf.CheckoutInterface;
@@ -39,6 +49,7 @@ public class UserBookAmbulanceActivity extends AppCompatActivity implements Chec
     TextView textLocation;
     Button btncofirm;
     EditText inputDestination, inputCondition;
+    ImageView btnMap;
 
     protected LocationManager locationManager;
     protected LocationListener locationListener;
@@ -59,6 +70,17 @@ public class UserBookAmbulanceActivity extends AppCompatActivity implements Chec
 
         initView();
 
+        // toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // add back arrow to toolbar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(R.string.app_name);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
         btncofirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,6 +100,14 @@ public class UserBookAmbulanceActivity extends AppCompatActivity implements Chec
                 } else {
                     Toast.makeText(UserBookAmbulanceActivity.this, "Please enter destination and condition!", Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        btnMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -108,6 +138,7 @@ public class UserBookAmbulanceActivity extends AppCompatActivity implements Chec
         btncofirm = findViewById(R.id.btnconf);
         inputDestination = findViewById(R.id.inputDestination);
         inputCondition = findViewById(R.id.inputCondition);
+        btnMap = findViewById(R.id.btnMap);
     }
 
 
@@ -185,6 +216,67 @@ public class UserBookAmbulanceActivity extends AppCompatActivity implements Chec
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
 //        Log.d("Latitude","status");
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            finish(); // close this activity and return to preview activity (if there is any)
+        }
+
+        if (item.getItemId() == R.id.profile) {
+            Intent intent = null;
+            switch (ContantUtil.roleName) {
+                case "USER":
+                    intent = new Intent(getApplicationContext(), HomeUserActivity.class);
+                    break;
+                case "PHARMACY":
+                    intent = new Intent(getApplicationContext(), PharmacyActivity.class);
+                    break;
+                case "AMBULANCE":
+                    intent = new Intent(getApplicationContext(), AmbulanceActivity.class);
+                    break;
+                default:
+                    intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    break;
+            }
+            startActivity(intent);
+        }
+
+        if (item.getItemId() == R.id.logout) {
+            // show message
+            AlertDialog.Builder builder = new AlertDialog.Builder(UserBookAmbulanceActivity.this);
+
+            // Setting message manually and performing action on button click
+            builder.setMessage("Are you sure you want to log out?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            finish(); // close this activity and return to preview activity (if there is any)
+                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                            startActivity(intent);
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            // Creating dialog box
+            AlertDialog alert = builder.create();
+            // Setting the title manually
+            alert.setTitle("Ambulance Booking");
+            alert.show();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

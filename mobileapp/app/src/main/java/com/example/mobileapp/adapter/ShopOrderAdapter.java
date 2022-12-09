@@ -14,13 +14,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobileapp.R;
-import com.example.mobileapp.activity.pharmacy.PharmacyHistoryPharmacyActivity;
 import com.example.mobileapp.activity.user.UserHistoryPharmacyDetailActivity;
-import com.example.mobileapp.api.CheckoutAPI;
-import com.example.mobileapp.dto.OrdersDTO;
-import com.example.mobileapp.itf.CheckoutInterface;
 import com.example.mobileapp.model.Orders;
-import com.example.mobileapp.model.Product;
 import com.example.mobileapp.util.ContantUtil;
 
 import java.util.List;
@@ -35,7 +30,6 @@ public class ShopOrderAdapter extends RecyclerView.Adapter<ShopOrderAdapter.Prod
         this.context = context;
         this.list = list;
         this.isUpdate = isUpdate;
-
     }
 
     @NonNull
@@ -55,52 +49,14 @@ public class ShopOrderAdapter extends RecyclerView.Adapter<ShopOrderAdapter.Prod
         holder.textTotal.setText(String.valueOf(orders.getProgress()));
 
         holder.main.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ContantUtil.orders = orders;
-                    Intent intent = new Intent(context, UserHistoryPharmacyDetailActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
-                }
-            });
-//
-//        if (isUpdate) {
-//            holder.btnAdd.setVisibility(View.VISIBLE);
-//            holder.btnRemove.setVisibility(View.VISIBLE);
-//
-//            holder.btnAdd.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    ContantUtil.addToCart(product.getId(), product);
-//                    Product p = ContantUtil.getProduct(product.getId());
-//                    if (p != null) {
-//                        product.setQty(p.getQty());
-//                        holder.textQty.setText(String.valueOf(product.getQty()));
-//
-//                        double total = Double.parseDouble(product.getPrice()) * product.getQty();
-//                        holder.textTotal.setText(String.valueOf(total));
-//                    }
-//                }
-//            });
-//
-//            holder.btnRemove.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    ContantUtil.removeToCart(product.getId());
-//                    Product p = ContantUtil.getProduct(product.getId());
-//                    if (p != null) {
-//                        product.setQty(p.getQty());
-//                        holder.textQty.setText(String.valueOf(product.getQty()));
-//
-//                        double total = Double.parseDouble(product.getPrice()) * product.getQty();
-//                        holder.textTotal.setText(String.valueOf(total));
-//                    }
-//                }
-//            });
-//        } else {
-//            holder.btnAdd.setVisibility(View.INVISIBLE);
-//            holder.btnRemove.setVisibility(View.INVISIBLE);
-//        }
+            @Override
+            public void onClick(View view) {
+                ContantUtil.orders = orders;
+                Intent intent = new Intent(context, UserHistoryPharmacyDetailActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -117,8 +73,6 @@ public class ShopOrderAdapter extends RecyclerView.Adapter<ShopOrderAdapter.Prod
         TextView textName, textDate, textQty, textTotal;
         ImageView btnRemove, btnAdd;
 
-
-
         public ProductViewhoder(@NonNull View itemView) {
             super(itemView);
             main = itemView.findViewById(R.id.mainPopular);
@@ -131,4 +85,5 @@ public class ShopOrderAdapter extends RecyclerView.Adapter<ShopOrderAdapter.Prod
 
         }
     }
+
 }

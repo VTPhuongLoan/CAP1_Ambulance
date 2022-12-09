@@ -2,7 +2,11 @@ package com.example.restapi.model.mapper.impl;
 
 import com.example.restapi.model.dto.AccountDTO;
 import com.example.restapi.model.dto.RoleDTO;
+import com.example.restapi.model.entity.Ambulance;
+import com.example.restapi.model.entity.Pharmacy;
 import com.example.restapi.model.mapper.AccountMapper;
+import com.example.restapi.service.AmbulanceService;
+import com.example.restapi.service.PharmacyService;
 import com.example.restapi.service.RoleService;
 import com.example.restapi.model.entity.Account;
 import com.example.restapi.model.entity.Role;
@@ -18,6 +22,12 @@ public class AccountMapperImpl implements AccountMapper {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private AmbulanceService ambulanceService;
+
+    @Autowired
+    private PharmacyService pharmacyService;
 
     @Override
     public AccountDTO toDTO(Account account) {
@@ -49,6 +59,19 @@ public class AccountMapperImpl implements AccountMapper {
             accountDTO.setRole(roleDTO);
             accountDTO.setRoleId(roleDTO.getId());
             accountDTO.setRoleName(account.getRole().getName());
+        }
+
+        // ambulance
+        Ambulance ambulance = ambulanceService.findByAccount(account);
+        if (ambulance != null) {
+            accountDTO.setAmbulanceName(ambulance.getName());
+            accountDTO.setNumberPlate(ambulance.getNumberPlate());
+        }
+
+        // pharmacy
+        Pharmacy pharmacy = pharmacyService.findByAccountId(account.getId());
+        if (pharmacy != null) {
+            accountDTO.setPharmacyName(pharmacy.getName());
         }
 
         return accountDTO;

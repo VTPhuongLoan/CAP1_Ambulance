@@ -7,14 +7,29 @@
     android:background="@color/back_user"
     tools:context=".activity.user.UserBookAmbulanceActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.Mobileapp.AppBarOverlay"
+        tools:ignore="MissingConstraints">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/Theme.Mobileapp.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginTop="10dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.194"
         tools:layout_editor_absoluteX="0dp">
@@ -25,30 +40,31 @@
             android:layout_height="wrap_content"
             android:text="Your position"
             android:textColor="@color/black"
-            android:textStyle="bold"
             android:textSize="24sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/constraint3"
             app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/textLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:text="..."
             android:textColor="@color/black"
-            android:textStyle="bold"
             android:textSize="18sp"
-            android:layout_marginTop="10dp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imageView1" />
 
         <ImageView
-            android:id="@+id/mimap"
+            android:id="@+id/btnMap"
             android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_height="match_parent"
             android:src="@drawable/mimap"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -57,13 +73,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="80dp"
         android:layout_marginEnd="32dp"
         android:background="@color/white"
         android:drawablePadding="16dp"
         android:hint="Destination"
         android:inputType="text"
         android:padding="16dp"
-        android:layout_marginTop="80dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraint3" />
@@ -73,13 +89,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="32dp"
         android:background="@color/white"
         android:drawablePadding="16dp"
         android:hint="Condition description..."
         android:inputType="text"
         android:padding="16dp"
-        android:layout_marginTop="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inputDestination" />

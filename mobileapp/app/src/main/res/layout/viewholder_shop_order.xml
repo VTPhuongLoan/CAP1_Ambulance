@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginStart="16dp"
+    android:layout_marginStart="5dp"
     android:layout_marginTop="10dp"
-    android:layout_marginEnd="16dp"
+    android:layout_marginEnd="5dp"
     android:layout_marginBottom="10dp"
     android:background="@drawable/background_card"
     android:id="@+id/mainPopular"
@@ -23,7 +23,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ambulance" />
+        app:srcCompat="@drawable/pharma" />
 
     <TextView
         android:id="@+id/textName"
@@ -57,6 +57,7 @@
         android:textColor="#373b54"
         android:textStyle="bold"
         android:textSize="18sp"
+        android:paddingBottom="20px"
         app:layout_constraintBottom_toBottomOf="@+id/btnRemove"
         app:layout_constraintStart_toEndOf="@+id/btnRemove"
         app:layout_constraintTop_toTopOf="@+id/btnRemove" />
@@ -91,6 +92,7 @@
         android:textColor="#373b54"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:paddingBottom="20px"
         app:layout_constraintBottom_toBottomOf="@+id/btnAdd"
         app:layout_constraintEnd_toEndOf="@+id/textDate"
         app:layout_constraintTop_toTopOf="@+id/btnAdd" />

@@ -1,14 +1,22 @@
 package com.example.mobileapp.activity.pharmacy;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mobileapp.activity.HomeUserActivity;
+import com.example.mobileapp.activity.LoginActivity;
+import com.example.mobileapp.activity.ambulance.AmbulanceActivity;
 import com.example.mobileapp.adapter.ProductAdapter;
 import com.example.mobileapp.api.ProductAPI;
 import com.example.mobileapp.itf.ProductInterface;
@@ -24,7 +32,7 @@ public class ProductListActivity extends AppCompatActivity implements ProductInt
 
     RecyclerView recyclerViewProductList;
     RecyclerView.Adapter adapter;
-    FloatingActionButton addProduct;
+    FloatingActionButton btnAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +42,23 @@ public class ProductListActivity extends AppCompatActivity implements ProductInt
         initView();
         click();
 
+        // toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // add back arrow to toolbar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(R.string.app_name);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
         ProductAPI productAPI = new ProductAPI(ProductListActivity.this);
         productAPI.findAllProductByPharmacy(Long.parseLong(ContantUtil.authDTO.getPharmacyId()));
     }
 
     private void click() {
-        addProduct.setOnClickListener(new View.OnClickListener() {
+        btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ProductListActivity.this, ProductFormActivity.class);
@@ -52,22 +71,14 @@ public class ProductListActivity extends AppCompatActivity implements ProductInt
     }
 
     private void initView() {
-        addProduct = findViewById(R.id.product_add);
-    }
-
-    private void recyclerViewProduct(List<Product> productList) {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        recyclerViewProductList = findViewById(R.id.recyclerViewSearch);
-        recyclerViewProductList.setLayoutManager(linearLayoutManager);
-        recyclerViewProductList.setAdapter(adapter);
+        btnAdd = findViewById(R.id.btnAdd);
     }
 
     @Override
     public void onSuccess(List<Product> productList) {
-        recyclerViewProduct(productList);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2, LinearLayoutManager.VERTICAL,false);
         recyclerViewProductList = findViewById(R.id.recyclerViewSearch);
-        recyclerViewProductList.setLayoutManager(linearLayoutManager);
+        recyclerViewProductList.setLayoutManager(gridLayoutManager);
 
         adapter = new ProductAdapter(ProductListActivity.this, productList);
         recyclerViewProductList.setAdapter(adapter);
@@ -84,6 +95,67 @@ public class ProductListActivity extends AppCompatActivity implements ProductInt
 
         ProductAPI productAPI = new ProductAPI(ProductListActivity.this);
         productAPI.findAllProductByPharmacy(Long.parseLong(ContantUtil.authDTO.getPharmacyId()));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            finish(); // close this activity and return to preview activity (if there is any)
+        }
+
+        if (item.getItemId() == R.id.profile) {
+            Intent intent = null;
+            switch (ContantUtil.roleName) {
+                case "USER":
+                    intent = new Intent(getApplicationContext(), HomeUserActivity.class);
+                    break;
+                case "PHARMACY":
+                    intent = new Intent(getApplicationContext(), PharmacyActivity.class);
+                    break;
+                case "AMBULANCE":
+                    intent = new Intent(getApplicationContext(), AmbulanceActivity.class);
+                    break;
+                default:
+                    intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    break;
+            }
+            startActivity(intent);
+        }
+
+        if (item.getItemId() == R.id.logout) {
+            // show message
+            AlertDialog.Builder builder = new AlertDialog.Builder(ProductListActivity.this);
+
+            // Setting message manually and performing action on button click
+            builder.setMessage("Are you sure you want to log out?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            finish(); // close this activity and return to preview activity (if there is any)
+                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                            startActivity(intent);
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            // Creating dialog box
+            AlertDialog alert = builder.create();
+            // Setting the title manually
+            alert.setTitle("Ambulance Booking");
+            alert.show();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

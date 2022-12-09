@@ -1,4 +1,4 @@
-package com.example.mobileapp.activity.user;
+package com.example.mobileapp.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -13,27 +13,25 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobileapp.R;
-import com.example.mobileapp.activity.HomeUserActivity;
-import com.example.mobileapp.activity.LoginActivity;
 import com.example.mobileapp.activity.ambulance.AmbulanceActivity;
 import com.example.mobileapp.activity.pharmacy.PharmacyActivity;
-import com.example.mobileapp.adapter.ShopOrderAdapter;
-import com.example.mobileapp.api.CheckoutAPI;
-import com.example.mobileapp.itf.CheckoutInterface;
-import com.example.mobileapp.model.Orders;
+import com.example.mobileapp.adapter.MessageAdapter;
+import com.example.mobileapp.dto.MessageDTO;
 import com.example.mobileapp.util.ContantUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class UserHistoryPharmacyActivity extends AppCompatActivity implements CheckoutInterface {
+public class MessageActivity extends AppCompatActivity{
 
     RecyclerView recyclerViewProductList;
     RecyclerView.Adapter adapter;
+    List<MessageDTO> messageList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_history_pharmacy);
+        setContentView(R.layout.activity_message_list);
 
         // toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -46,38 +44,14 @@ public class UserHistoryPharmacyActivity extends AppCompatActivity implements Ch
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        CheckoutAPI checkoutAPI = new CheckoutAPI(UserHistoryPharmacyActivity.this);
-        checkoutAPI.findAllOrdersByAccount(Long.parseLong(ContantUtil.authDTO.getAccountId()));
-    }
+        messageList = ContantUtil.messageList;
 
-    @Override
-    public void onSuccessOrder() {
-
-    }
-
-    @Override
-    public void onSuccessBooking() {
-
-    }
-
-    @Override
-    public void onFetchOrders(List<Orders> ordersList) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerViewProductList = findViewById(R.id.recyclerViewSearch);
         recyclerViewProductList.setLayoutManager(linearLayoutManager);
 
-        adapter = new ShopOrderAdapter(getApplicationContext(), ordersList, false);
+        adapter = new MessageAdapter(MessageActivity.this, messageList);
         recyclerViewProductList.setAdapter(adapter);
-    }
-
-    @Override
-    public void onFetchBookings() {
-
-    }
-
-    @Override
-    public void onError(List<String> errors) {
-
     }
 
     @Override
@@ -114,7 +88,7 @@ public class UserHistoryPharmacyActivity extends AppCompatActivity implements Ch
 
         if (item.getItemId() == R.id.logout) {
             // show message
-            AlertDialog.Builder builder = new AlertDialog.Builder(UserHistoryPharmacyActivity.this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(MessageActivity.this);
 
             // Setting message manually and performing action on button click
             builder.setMessage("Are you sure you want to log out?")

@@ -13,10 +13,10 @@
     <string name="account.otp.invalid">OTP code is incorrect</string>
     <string name="account.email.notExists">Email does not exist</string>
 
-    <string name="ad">Lastest traffic accident news today September 13.2022</string>
+    <string name="ad">Hello Nguyen Van Nam</string>
     <string name="at">"Attensive care, enthusiastic listening"</string>
     <string name="medical">Medical Service recommends that you set a strong password (Over 8 characters, including letters, number,special character)</string>
 
-    <string name="api_key">AIzaSyBZCw81fZmRxH_Hqw27_fLOvJ8nnO46KSM</string>
+    <string name="api_key">AIzaSyD04Zyg6POOnly4n0KyoySEHbEgcno1ejQ</string>
 
 </resources>
