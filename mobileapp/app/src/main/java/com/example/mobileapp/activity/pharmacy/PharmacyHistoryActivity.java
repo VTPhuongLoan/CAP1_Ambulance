@@ -17,6 +17,7 @@ import com.example.mobileapp.R;
 import com.example.mobileapp.activity.HomeUserActivity;
 import com.example.mobileapp.activity.LoginActivity;
 import com.example.mobileapp.activity.ambulance.AmbulanceActivity;
+import com.example.mobileapp.activity.user.UserActivity;
 import com.example.mobileapp.adapter.ShopOrderAdapter;
 import com.example.mobileapp.api.CheckoutAPI;
 import com.example.mobileapp.itf.CheckoutInterface;
@@ -97,7 +98,7 @@ public class PharmacyHistoryActivity extends AppCompatActivity implements Checko
             Intent intent = null;
             switch (ContantUtil.roleName) {
                 case "USER":
-                    intent = new Intent(getApplicationContext(), HomeUserActivity.class);
+                    intent = new Intent(getApplicationContext(), UserActivity.class);
                     break;
                 case "PHARMACY":
                     intent = new Intent(getApplicationContext(), PharmacyActivity.class);

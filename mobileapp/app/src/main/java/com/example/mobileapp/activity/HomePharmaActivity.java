@@ -17,6 +17,7 @@ import com.example.mobileapp.activity.ambulance.AmbulanceActivity;
 import com.example.mobileapp.activity.pharmacy.PharmacyActivity;
 import com.example.mobileapp.activity.pharmacy.PharmacyHistoryActivity;
 import com.example.mobileapp.activity.pharmacy.ProductListActivity;
+import com.example.mobileapp.activity.user.UserActivity;
 import com.example.mobileapp.util.ContantUtil;
 
 public class HomePharmaActivity extends AppCompatActivity {
@@ -94,7 +95,7 @@ public class HomePharmaActivity extends AppCompatActivity {
             Intent intent = null;
             switch (ContantUtil.roleName) {
                 case "USER":
-                    intent = new Intent(getApplicationContext(), HomeUserActivity.class);
+                    intent = new Intent(getApplicationContext(), UserActivity.class);
                     break;
                 case "PHARMACY":
                     intent = new Intent(getApplicationContext(), PharmacyActivity.class);

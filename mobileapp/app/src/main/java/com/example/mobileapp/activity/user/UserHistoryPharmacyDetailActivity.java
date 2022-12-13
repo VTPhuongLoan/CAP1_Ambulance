@@ -196,7 +196,7 @@ public class UserHistoryPharmacyDetailActivity extends AppCompatActivity impleme
             Intent intent = null;
             switch (ContantUtil.roleName) {
                 case "USER":
-                    intent = new Intent(getApplicationContext(), HomeUserActivity.class);
+                    intent = new Intent(getApplicationContext(), UserActivity.class);
                     break;
                 case "PHARMACY":
                     intent = new Intent(getApplicationContext(), PharmacyActivity.class);

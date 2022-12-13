@@ -100,4 +100,7 @@ public interface APIService {
     @DELETE("/api/product/id/{id}")
     Call<ReponseDTO> deleteProduct(@Header("Authorization") String token, @Path("id") long id);
 
+    @POST("/api/account/password")
+    Call<ReponseDTO> changePass(@Header("Authorization") String token, @Body ProfileDTO profileDTO);
+
 }

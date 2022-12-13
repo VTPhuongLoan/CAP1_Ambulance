@@ -20,7 +20,7 @@ public class ContantUtil {
     public static String roleName = null;
 
     // message
-    public static List<MessageDTO> messageList = null;
+    public static HashMap<String, MessageDTO> messageList = null;
 
     // latitude
     public static double latitude = 10.848502;
@@ -122,12 +122,36 @@ public class ContantUtil {
         return product;
     }
 
-    public static void addMessage(MessageDTO message) {
-        if (messageList == null) {
-            messageList = new ArrayList<>();
+    public static boolean checkMessage(String key) {
+        if (messageList != null) {
+            if (messageList.containsKey(key)) {
+                return true;
+            }
         }
 
-        messageList.add(message);
+        return false;
+    }
+
+    public static void addMessage(MessageDTO message) {
+        if (messageList == null) {
+            messageList = new HashMap<>();
+        }
+
+        if (!messageList.containsKey(message.getId())) {
+            messageList.put(message.getId(), message);
+        }
+    }
+
+    public static List<MessageDTO> getMessage() {
+        List<MessageDTO> messageDTOList = new ArrayList<>();
+
+        if (messageList != null) {
+            for (Map.Entry<String, MessageDTO> entry : messageList.entrySet()) {
+                messageDTOList.add(entry.getValue());
+            }
+        }
+
+        return messageDTOList;
     }
 
 }

@@ -14,4 +14,7 @@ public class ProfileDTO {
     private String address;
     private String numberPlate;
 
+    private String oldPass;
+    private String newPass;
+
 }

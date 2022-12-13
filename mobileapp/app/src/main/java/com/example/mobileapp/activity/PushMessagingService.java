@@ -16,7 +16,9 @@ import com.example.mobileapp.util.ContantUtil;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.StringTokenizer;
 import java.util.UUID;
 
 public class PushMessagingService extends FirebaseMessagingService {
@@ -35,31 +37,48 @@ public class PushMessagingService extends FirebaseMessagingService {
         String body = message.getNotification().getBody();
         String CHANNEL_ID = "MESSAGE";
 
-        NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
-                "Message Notification",
-                NotificationManager.IMPORTANCE_HIGH);
-        getSystemService(NotificationManager.class).createNotificationChannel(channel);
-        Notification.Builder notiBuilder = new Notification.Builder(this, CHANNEL_ID)
-                                            .setContentTitle(title.replace("||MSG||", ""))
-                                            .setContentText(body)
-                                            .setSmallIcon(R.mipmap.ic_launcher)
-                                            .setAutoCancel(true);
-        NotificationManagerCompat.from(this).notify(1, notiBuilder.build());
+        String stKey = "";
+        String stType = "";
+        String stTitle = "";
 
-        if (!title.startsWith("||MSG||")) {
-            Intent intent = new Intent("MyMessage");
-            intent.putExtra("title", title);
-            intent.putExtra("body", body);
-            broadcaster.sendBroadcast(intent);
+        StringTokenizer st = new StringTokenizer(title, "||");
+        while (st.hasMoreTokens()) {
+            stKey = st.nextToken();
+            stType = st.nextToken();
+            stTitle = st.nextToken();
         }
 
-        // save
-        MessageDTO msg = new MessageDTO();
-        msg.setId(UUID.randomUUID().toString());
-        msg.setTitle(title);
-        msg.setContent(body);
-        msg.setTime(new Date());
-        ContantUtil.addMessage(msg);
+        if (!ContantUtil.checkMessage(stKey)) {
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
+                    "Message Notification",
+                    NotificationManager.IMPORTANCE_HIGH);
+            getSystemService(NotificationManager.class).createNotificationChannel(channel);
+            Notification.Builder notiBuilder = new Notification.Builder(this, CHANNEL_ID)
+                    .setContentTitle(stTitle)
+                    .setContentText(body)
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setAutoCancel(true);
+            NotificationManagerCompat.from(this).notify(1, notiBuilder.build());
+
+            if (stType.contains("BOOKING")) {
+                Intent intent = new Intent("MyMessage");
+                intent.putExtra("title", stTitle);
+                intent.putExtra("body", body);
+                broadcaster.sendBroadcast(intent);
+            }
+
+            Date date = new Date();
+            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+
+            // save
+            MessageDTO msg = new MessageDTO();
+            msg.setId(stKey);
+            msg.setTitle(stTitle);
+            msg.setContent(body);
+            msg.setTime(formatter.format(date));
+            msg.setType(stType);
+            ContantUtil.addMessage(msg);
+        }
 
         super.onMessageReceived(message);
     }

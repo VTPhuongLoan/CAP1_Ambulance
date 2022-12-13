@@ -3,8 +3,8 @@ package com.hrs.controller;
 import com.hrs.model.dto.LoginDTO;
 import com.hrs.model.dto.MessageDTO;
 import com.hrs.model.dto.MessageManagerDTO;
-import com.hrs.model.reponse.MessageManagerResponse;
-import com.hrs.service.MessageManagerService;
+import com.hrs.model.reponse.MessageResponse;
+import com.hrs.service.MessageService;
 import com.hrs.utils.ErrorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,7 +23,7 @@ import java.util.Map;
 public class MessageController {
 
     @Autowired
-    MessageManagerService messageManagerService;
+    MessageService messageManagerService;
 
     @Autowired
     ErrorUtils errorUtils;
@@ -65,9 +65,9 @@ public class MessageController {
             return "login";
         }
 
-        MessageManagerResponse response = messageManagerService.getById(token, id);
+        MessageResponse response = messageManagerService.getById(token, id);
         if (response == null) {
-            response = new MessageManagerResponse();
+            response = new MessageResponse();
         }
         model.addAttribute("messageManagerDTO", response);
         model.addAttribute("errors", new HashMap<>());
@@ -97,8 +97,8 @@ public class MessageController {
         if (bindingResult.hasErrors()) {
             errorUtils.loadErrorList(bindingResult, errorList);
         } else {
-            messageManagerService.save(messageManagerDTO, token);
-            redirectUrl = "/masterdata/message/form/" + messageManagerDTO.getId() + "?action=save&status=success";
+            MessageResponse messageManagerResponse = messageManagerService.save(messageManagerDTO, token);
+            redirectUrl = "/masterdata/message/form/" + messageManagerResponse.getId() + "?action=save&status=success";
             return "redirect:" + redirectUrl;
         }
 

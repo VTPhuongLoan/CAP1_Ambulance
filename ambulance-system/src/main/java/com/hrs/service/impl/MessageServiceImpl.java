@@ -4,13 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.hrs.model.dto.AccountDTO;
 import com.hrs.model.dto.MessageManagerDTO;
-import com.hrs.model.reponse.AmbulanceResponse;
 import com.hrs.model.reponse.DTOResponse;
-import com.hrs.model.reponse.MessageManagerResponse;
-import com.hrs.service.AmbulanceService;
-import com.hrs.service.MessageManagerService;
+import com.hrs.model.reponse.MessageResponse;
+import com.hrs.service.MessageService;
 import com.hrs.utils.ConstantUtils;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -21,12 +18,12 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
-public class MessageManagerServiceImpl implements MessageManagerService {
+public class MessageServiceImpl implements MessageService {
 
     private RestTemplate restTemplate = new RestTemplate();
 
     @Override
-    public List<MessageManagerResponse> getList(String token) {
+    public List<MessageResponse> getList(String token) {
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
@@ -38,9 +35,9 @@ public class MessageManagerServiceImpl implements MessageManagerService {
             String respData = objectMapper.writeValueAsString(response.getBody());
 
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            Type typeData = new TypeToken<DTOResponse<List<MessageManagerResponse>>>() {
+            Type typeData = new TypeToken<DTOResponse<List<MessageResponse>>>() {
             }.getType();
-            DTOResponse<List<MessageManagerResponse>> dtoResponse = gson.fromJson(respData, typeData);
+            DTOResponse<List<MessageResponse>> dtoResponse = gson.fromJson(respData, typeData);
             return dtoResponse.getData();
         } catch (Exception ex) {
             return null;
@@ -48,7 +45,7 @@ public class MessageManagerServiceImpl implements MessageManagerService {
     }
 
     @Override
-    public MessageManagerResponse getById(String token, long id) {
+    public MessageResponse getById(String token, long id) {
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
@@ -60,9 +57,9 @@ public class MessageManagerServiceImpl implements MessageManagerService {
             String respData = objectMapper.writeValueAsString(response.getBody());
 
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            Type typeData = new TypeToken<DTOResponse<MessageManagerResponse>>() {
+            Type typeData = new TypeToken<DTOResponse<MessageResponse>>() {
             }.getType();
-            DTOResponse<MessageManagerResponse> dtoResponse = gson.fromJson(respData, typeData);
+            DTOResponse<MessageResponse> dtoResponse = gson.fromJson(respData, typeData);
             return dtoResponse.getData();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -71,15 +68,23 @@ public class MessageManagerServiceImpl implements MessageManagerService {
     }
 
     @Override
-    public String save(MessageManagerDTO messageManagerDTO, String token) {
+    public MessageResponse save(MessageManagerDTO messageManagerDTO, String token) {
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
             headers.setBearerAuth(token);
             HttpEntity<MessageManagerDTO> entity = new HttpEntity<>(messageManagerDTO, headers);
             String url = ConstantUtils.HOST_URL + "api/message/save";
-            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
-            return response.getBody();
+            ResponseEntity<Object> response = restTemplate.exchange(url, HttpMethod.POST, entity, Object.class);
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            String respData = objectMapper.writeValueAsString(response.getBody());
+
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            Type typeData = new TypeToken<DTOResponse<MessageResponse>>() {
+            }.getType();
+            DTOResponse<MessageResponse> dtoResponse = gson.fromJson(respData, typeData);
+            return dtoResponse.getData();
         } catch (Exception ex) {
             return null;
         }

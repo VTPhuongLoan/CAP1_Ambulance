@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/checkout")
@@ -87,10 +88,12 @@ public class CheckoutController {
 
             Account booking = accountService.findById(bookingDTO.getAccountId());
 
+            UUID uuid = UUID.randomUUID();
+
             // send noti
             NotificationRequestDTO notificationRequestDto = new NotificationRequestDTO();
             notificationRequestDto.setTarget(ambulance.getToken());
-            notificationRequestDto.setTitle(String.valueOf(history.getId()));
+            notificationRequestDto.setTitle(uuid + "||BOOKING||" + String.valueOf(history.getId()) );
             notificationRequestDto.setBody("You have a booking from " + bookingDTO.getNote().toUpperCase() + ", do you agree?");
             notificationService.sendPnsToDevice(notificationRequestDto);
         }

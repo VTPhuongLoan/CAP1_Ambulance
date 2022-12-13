@@ -18,7 +18,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +29,7 @@ import com.example.mobileapp.R;
 import com.example.mobileapp.activity.HomeUserActivity;
 import com.example.mobileapp.activity.LoginActivity;
 import com.example.mobileapp.activity.pharmacy.PharmacyActivity;
-import com.example.mobileapp.activity.user.UserBookAmbulanceActivity;
+import com.example.mobileapp.activity.user.UserActivity;
 import com.example.mobileapp.activity.user.UserHistoryBookingActivity;
 import com.example.mobileapp.api.BookingAPI;
 import com.example.mobileapp.api.CheckoutAPI;
@@ -42,13 +41,13 @@ import com.example.mobileapp.model.Orders;
 import com.example.mobileapp.util.ContantUtil;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class AmbulanceBookingSosActivity extends AppCompatActivity implements CheckoutInterface, BookingInterface, LocationListener {
 
-    Button btncancel, btnSubmit;
+    Button btncancel;
+//    Button btnSubmit;
     TextView textTime;
 
     CountDownTimer countDownTimer = null;
@@ -105,7 +104,7 @@ public class AmbulanceBookingSosActivity extends AppCompatActivity implements Ch
                     MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
         };
 
-        btnSubmit.setVisibility(View.INVISIBLE);
+//        btnSubmit.setVisibility(View.INVISIBLE);
 
         countDownTimer = new CountDownTimer(60000, 1000) {
             public void onTick(long millisUntilFinished) {
@@ -115,7 +114,7 @@ public class AmbulanceBookingSosActivity extends AppCompatActivity implements Ch
             }
 
             public void onFinish() {
-                btnSubmit.setVisibility(View.VISIBLE);
+//                btnSubmit.setVisibility(View.VISIBLE);
                 textTime.setText("NOT FOUND");
             }
         };
@@ -133,41 +132,41 @@ public class AmbulanceBookingSosActivity extends AppCompatActivity implements Ch
             }
         });
 
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                countDownTimer.cancel();
-
-                btnSubmit.setVisibility(View.INVISIBLE);
-
-                BookingDTO bookingDTO = new BookingDTO();
-                bookingDTO.setAccountId(Long.parseLong(ContantUtil.authDTO.getAccountId()));
-                bookingDTO.setUuid(ContantUtil.bookingDTO.getUuid());
-                bookingDTO.setLatitude(latitude);
-                bookingDTO.setLongitude(longitude);
-
-                CheckoutAPI checkoutAPI = new CheckoutAPI(AmbulanceBookingSosActivity.this);
-                checkoutAPI.findBooking(bookingDTO);
-
-                countDownTimer = new CountDownTimer(60000, 1000) {
-                    public void onTick(long millisUntilFinished) {
-                        textTime.setText(String.valueOf(millisUntilFinished / 1000));
-
-                        fetchBooking();
-                    }
-
-                    public void onFinish() {
-                        btnSubmit.setVisibility(View.VISIBLE);
-                        textTime.setText("NOT FOUND");
-                    }
-                };
-                countDownTimer.start();
-            }
-        });
+//        btnSubmit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                countDownTimer.cancel();
+//
+//                btnSubmit.setVisibility(View.INVISIBLE);
+//
+//                BookingDTO bookingDTO = new BookingDTO();
+//                bookingDTO.setAccountId(Long.parseLong(ContantUtil.authDTO.getAccountId()));
+//                bookingDTO.setUuid(ContantUtil.bookingDTO.getUuid());
+//                bookingDTO.setLatitude(latitude);
+//                bookingDTO.setLongitude(longitude);
+//
+//                CheckoutAPI checkoutAPI = new CheckoutAPI(AmbulanceBookingSosActivity.this);
+//                checkoutAPI.findBooking(bookingDTO);
+//
+//                countDownTimer = new CountDownTimer(60000, 1000) {
+//                    public void onTick(long millisUntilFinished) {
+//                        textTime.setText(String.valueOf(millisUntilFinished / 1000));
+//
+//                        fetchBooking();
+//                    }
+//
+//                    public void onFinish() {
+//                        btnSubmit.setVisibility(View.VISIBLE);
+//                        textTime.setText("NOT FOUND");
+//                    }
+//                };
+//                countDownTimer.start();
+//            }
+//        });
     }
 
     private void initView() {
-        btnSubmit = findViewById(R.id.btnSubmit);
+//        btnSubmit = findViewById(R.id.btnSubmit);
         btncancel = findViewById(R.id.btnCancel);
         textTime = findViewById(R.id.textTime);
     }
@@ -270,7 +269,7 @@ public class AmbulanceBookingSosActivity extends AppCompatActivity implements Ch
             Intent intent = null;
             switch (ContantUtil.roleName) {
                 case "USER":
-                    intent = new Intent(getApplicationContext(), HomeUserActivity.class);
+                    intent = new Intent(getApplicationContext(), UserActivity.class);
                     break;
                 case "PHARMACY":
                     intent = new Intent(getApplicationContext(), PharmacyActivity.class);

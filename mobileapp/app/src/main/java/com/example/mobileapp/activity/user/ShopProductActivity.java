@@ -102,7 +102,7 @@ public class ShopProductActivity extends AppCompatActivity implements ProductInt
             Intent intent = null;
             switch (ContantUtil.roleName) {
                 case "USER":
-                    intent = new Intent(getApplicationContext(), HomeUserActivity.class);
+                    intent = new Intent(getApplicationContext(), UserActivity.class);
                     break;
                 case "PHARMACY":
                     intent = new Intent(getApplicationContext(), PharmacyActivity.class);

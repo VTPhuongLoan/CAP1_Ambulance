@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/profile"
-        android:icon="@android:drawable/ic_popup_sync"
+        android:icon="@drawable/icon_profile_x128"
         android:title="Profile"
         app:showAsAction="always" />
     <item
         android:id="@+id/logout"
-        android:icon="@android:drawable/ic_lock_power_off"
+        android:icon="@drawable/icon_logout_x128"
         android:title="Logout"
         app:showAsAction="always" />
 </menu>

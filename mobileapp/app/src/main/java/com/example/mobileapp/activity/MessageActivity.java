@@ -15,11 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mobileapp.R;
 import com.example.mobileapp.activity.ambulance.AmbulanceActivity;
 import com.example.mobileapp.activity.pharmacy.PharmacyActivity;
+import com.example.mobileapp.activity.user.UserActivity;
 import com.example.mobileapp.adapter.MessageAdapter;
 import com.example.mobileapp.dto.MessageDTO;
 import com.example.mobileapp.util.ContantUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MessageActivity extends AppCompatActivity{
@@ -44,7 +44,7 @@ public class MessageActivity extends AppCompatActivity{
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        messageList = ContantUtil.messageList;
+        messageList = ContantUtil.getMessage();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerViewProductList = findViewById(R.id.recyclerViewSearch);
@@ -71,7 +71,7 @@ public class MessageActivity extends AppCompatActivity{
             Intent intent = null;
             switch (ContantUtil.roleName) {
                 case "USER":
-                    intent = new Intent(getApplicationContext(), HomeUserActivity.class);
+                    intent = new Intent(getApplicationContext(), UserActivity.class);
                     break;
                 case "PHARMACY":
                     intent = new Intent(getApplicationContext(), PharmacyActivity.class);

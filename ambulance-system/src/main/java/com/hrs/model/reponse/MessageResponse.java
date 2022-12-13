@@ -5,7 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class MessageManagerResponse {
+public class MessageResponse {
+
     public int version;
     public String createdOn;
     public String updatedOn;

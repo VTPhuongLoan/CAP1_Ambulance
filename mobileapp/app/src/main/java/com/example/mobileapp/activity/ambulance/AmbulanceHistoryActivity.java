@@ -16,6 +16,7 @@ import com.example.mobileapp.R;
 import com.example.mobileapp.activity.HomeUserActivity;
 import com.example.mobileapp.activity.LoginActivity;
 import com.example.mobileapp.activity.pharmacy.PharmacyActivity;
+import com.example.mobileapp.activity.user.UserActivity;
 import com.example.mobileapp.adapter.BookingAdapter;
 import com.example.mobileapp.api.BookingAPI;
 import com.example.mobileapp.itf.BookingInterface;
@@ -86,7 +87,7 @@ public class AmbulanceHistoryActivity extends AppCompatActivity implements Booki
             Intent intent = null;
             switch (ContantUtil.roleName) {
                 case "USER":
-                    intent = new Intent(getApplicationContext(), HomeUserActivity.class);
+                    intent = new Intent(getApplicationContext(), UserActivity.class);
                     break;
                 case "PHARMACY":
                     intent = new Intent(getApplicationContext(), PharmacyActivity.class);

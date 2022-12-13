@@ -17,7 +17,9 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.mobileapp.R;
 import com.example.mobileapp.activity.HomeUserActivity;
 import com.example.mobileapp.activity.LoginActivity;
+import com.example.mobileapp.activity.PasswordActivity;
 import com.example.mobileapp.activity.pharmacy.PharmacyActivity;
+import com.example.mobileapp.activity.user.UserActivity;
 import com.example.mobileapp.api.ProfileAPI;
 import com.example.mobileapp.dto.ProfileDTO;
 import com.example.mobileapp.itf.ProfileInterface;
@@ -28,7 +30,7 @@ import java.util.List;
 
 public class AmbulanceActivity extends AppCompatActivity implements ProfileInterface {
 
-    TextView textHello, textMsg, btnSubmit;
+    TextView textHello, textMsg, btnSubmit, textChangePass;
     EditText inputFullName, inputEmail, inputPhone, inputAddress, inputNumberPlate;
 
     @Override
@@ -82,6 +84,14 @@ public class AmbulanceActivity extends AppCompatActivity implements ProfileInter
                 profileAPI.updateProfile(profileDTO);
             }
         });
+
+        textChangePass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), PasswordActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initView() {
@@ -92,7 +102,8 @@ public class AmbulanceActivity extends AppCompatActivity implements ProfileInter
         inputEmail = findViewById(R.id.inputEmail);
         inputPhone = findViewById(R.id.inputPhone);
         inputAddress = findViewById(R.id.inputAddress);
-        inputNumberPlate= findViewById(R.id.inputNumberPlate);
+        inputNumberPlate = findViewById(R.id.inputNumberPlate);
+        textChangePass = findViewById(R.id.textChangePass);
     }
 
     private void initData(Account account) {
@@ -149,7 +160,7 @@ public class AmbulanceActivity extends AppCompatActivity implements ProfileInter
             Intent intent = null;
             switch (ContantUtil.roleName) {
                 case "USER":
-                    intent = new Intent(getApplicationContext(), HomeUserActivity.class);
+                    intent = new Intent(getApplicationContext(), UserActivity.class);
                     break;
                 case "PHARMACY":
                     intent = new Intent(getApplicationContext(), PharmacyActivity.class);

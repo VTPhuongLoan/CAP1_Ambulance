@@ -1,4 +1,4 @@
-package com.example.mobileapp.activity.pharmacy;
+package com.example.mobileapp.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -6,42 +6,33 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mobileapp.activity.HomeUserActivity;
-import com.example.mobileapp.activity.LoginActivity;
+import com.example.mobileapp.R;
 import com.example.mobileapp.activity.ambulance.AmbulanceActivity;
+import com.example.mobileapp.activity.pharmacy.PharmacyActivity;
 import com.example.mobileapp.activity.user.UserActivity;
-import com.example.mobileapp.adapter.ProductAdapter;
-import com.example.mobileapp.api.ProductAPI;
-import com.example.mobileapp.itf.ProductInterface;
-import com.example.mobileapp.model.Product;
+import com.example.mobileapp.adapter.MedicalAdapter;
+import com.example.mobileapp.model.Medical;
 import com.example.mobileapp.util.ContantUtil;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import com.example.mobileapp.R;
-
-public class ProductListActivity extends AppCompatActivity implements ProductInterface {
+public class MedicalActivity extends AppCompatActivity{
 
     RecyclerView recyclerViewProductList;
     RecyclerView.Adapter adapter;
-    FloatingActionButton btnAdd;
+    List<Medical> messageList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_product_list);
-
-        initView();
-        click();
+        setContentView(R.layout.activity_medical);
 
         // toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -54,48 +45,21 @@ public class ProductListActivity extends AppCompatActivity implements ProductInt
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        ProductAPI productAPI = new ProductAPI(ProductListActivity.this);
-        productAPI.findAllProductByPharmacy(Long.parseLong(ContantUtil.authDTO.getPharmacyId()));
-    }
+        messageList = new ArrayList<>();
 
-    private void click() {
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ProductListActivity.this, ProductFormActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putLong("pharmacyId", Long.parseLong(ContantUtil.authDTO.getPharmacyId()));
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
-    }
+        Medical m1 = new Medical();
+        m1.setId(1);
+        m1.setName("Trung Tâm Y Tế Dự Phòng Đà Nẵng Viet Nam");
+        m1.setAddress("103 Hùng Vương, Hải Châu 1, Hải Châu, Đà Nẵng");
+        m1.setContact("0236 3821 206");
+        messageList.add(m1);
 
-    private void initView() {
-        btnAdd = findViewById(R.id.btnAdd);
-    }
-
-    @Override
-    public void onSuccess(List<Product> productList) {
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2, LinearLayoutManager.VERTICAL,false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerViewProductList = findViewById(R.id.recyclerViewSearch);
-        recyclerViewProductList.setLayoutManager(gridLayoutManager);
+        recyclerViewProductList.setLayoutManager(linearLayoutManager);
 
-        adapter = new ProductAdapter(ProductListActivity.this, productList);
+        adapter = new MedicalAdapter(MedicalActivity.this, messageList);
         recyclerViewProductList.setAdapter(adapter);
-    }
-
-    @Override
-    public void onError(List<String> errors) {
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        ProductAPI productAPI = new ProductAPI(ProductListActivity.this);
-        productAPI.findAllProductByPharmacy(Long.parseLong(ContantUtil.authDTO.getPharmacyId()));
     }
 
     @Override
@@ -132,7 +96,7 @@ public class ProductListActivity extends AppCompatActivity implements ProductInt
 
         if (item.getItemId() == R.id.logout) {
             // show message
-            AlertDialog.Builder builder = new AlertDialog.Builder(ProductListActivity.this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(MedicalActivity.this);
 
             // Setting message manually and performing action on button click
             builder.setMessage("Are you sure you want to log out?")

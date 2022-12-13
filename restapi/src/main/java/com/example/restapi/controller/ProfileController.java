@@ -86,6 +86,7 @@ public class ProfileController {
         // save
         Account account = accountService.findById(profileDTO.getAccountId());
         if(!ObjectUtils.isEmpty(account)) {
+            account.setFullName(profileDTO.getFullName());
             account.setUsername(profileDTO.getEmail());
             account.setEmail(profileDTO.getEmail());
             account.setPhone(profileDTO.getPhone());

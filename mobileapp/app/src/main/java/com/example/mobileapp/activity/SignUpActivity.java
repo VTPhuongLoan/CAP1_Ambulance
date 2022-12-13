@@ -76,10 +76,11 @@ public class SignUpActivity extends AppCompatActivity implements RegisterInterfa
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String fullname = inputName.getText().toString();
-                String username = inputUsername.getText().toString();
-                String password = inputPassword.getText().toString();
                 if (validator()) {
+                    String fullname = inputName.getText().toString();
+                    String username = inputUsername.getText().toString();
+                    String password = inputPassword.getText().toString();
+
                     registerDTO = new RegisterDTO();
                     registerDTO.setFullName(fullname);
                     registerDTO.setUsername(username);

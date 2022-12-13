@@ -161,6 +161,26 @@
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Mobileapp.NoActionBar" />
+        <activity
+            android:name=".activity.user.UserActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Mobileapp.NoActionBar" />
+        <activity
+            android:name=".activity.MedicalActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Mobileapp.NoActionBar" />
+        <activity
+            android:name=".activity.PasswordActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Mobileapp.NoActionBar" />
+        <activity
+            android:name=".activity.CompleteChangePassActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Mobileapp.NoActionBar" />
         <service
             android:name=".activity.PushMessagingService"
             android:exported="false">

@@ -16,7 +16,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="50dp"
         android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,8 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:paddingLeft="50dp"
-        android:text="Hang with your favourite people on your favourite apps and devices"
+        android:text="Trung Tâm Y Tế Dự Phòng Đà Nẵng - Cơ sở tiêm chủng"
         android:textStyle="bold"
         android:textSize="20sp"
         android:textColor="#373b54"
@@ -45,11 +44,24 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:paddingLeft="50dp"
-        android:text="Connect with businesses Find deals, make reservations and get customer support by chatting with your favourite businesses straight from Messenger."
+        android:text="- Địa chỉ: 103 Hùng Vương, Hải Châu 1, Hải Châu, Đà Nẵng"
         android:textColor="#373b54"
         android:textSize="18sp"
         android:layout_marginBottom="15dp"
         app:layout_constraintTop_toBottomOf="@+id/textTitle"
+        app:layout_constraintStart_toEndOf="@+id/picCard" />
+
+    <TextView
+        android:id="@+id/textContact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:paddingLeft="50dp"
+        android:text="- Điện thoại: 0236 3821 206"
+        android:textColor="#373b54"
+        android:textSize="18sp"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/textBody"
         app:layout_constraintStart_toEndOf="@+id/picCard" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -19,6 +19,7 @@ import com.example.mobileapp.activity.ambulance.AmbulanceActivity;
 import com.example.mobileapp.activity.ambulance.AmbulanceBookingSosActivity;
 import com.example.mobileapp.activity.pharmacy.PharmacyActivity;
 import com.example.mobileapp.activity.user.ShopPharmacyActivity;
+import com.example.mobileapp.activity.user.UserActivity;
 import com.example.mobileapp.activity.user.UserBookAmbulanceActivity;
 import com.example.mobileapp.activity.user.UserCheckoutActivity;
 import com.example.mobileapp.activity.user.UserHistoryBookingActivity;
@@ -30,7 +31,7 @@ public class HomeUserActivity extends AppCompatActivity {
     LinearLayout linearAmbulance, linearPharmacy;
     LinearLayout linearSos;
 
-    LinearLayout linearHistoryPharmacy, linearHistoryAmbulance, linearMessage, linearProfile;
+    LinearLayout linearHistoryPharmacy, linearHistoryAmbulance, linearMessage, linearProfile, linearHospital;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,7 @@ public class HomeUserActivity extends AppCompatActivity {
         linearHistoryAmbulance = findViewById(R.id.linearHistoryAmbulance);
         linearMessage = findViewById(R.id.linearMessage);
         linearProfile = findViewById(R.id.linearProfile);
-
+        linearHospital = findViewById(R.id.linearHospital);
         linearSos = findViewById(R.id.linearSos);
     }
 
@@ -67,8 +68,8 @@ public class HomeUserActivity extends AppCompatActivity {
         linearAmbulance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intentperson = new Intent(HomeUserActivity.this, DashboardActivity.class);
-//                startActivity(intentperson);
+                Intent intentperson = new Intent(HomeUserActivity.this, UserBookAmbulanceActivity.class);
+                startActivity(intentperson);
             }
         });
 
@@ -107,8 +108,8 @@ public class HomeUserActivity extends AppCompatActivity {
         linearProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(HomeUserActivity.this, UserHistoryBookingActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(HomeUserActivity.this, UserActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -116,6 +117,14 @@ public class HomeUserActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeUserActivity.this, AmbulanceBookingSosActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        linearHospital.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeUserActivity.this, MedicalActivity.class);
                 startActivity(intent);
             }
         });
@@ -138,7 +147,7 @@ public class HomeUserActivity extends AppCompatActivity {
             Intent intent = null;
             switch (ContantUtil.roleName) {
                 case "USER":
-                    intent = new Intent(getApplicationContext(), HomeUserActivity.class);
+                    intent = new Intent(getApplicationContext(), UserActivity.class);
                     break;
                 case "PHARMACY":
                     intent = new Intent(getApplicationContext(), PharmacyActivity.class);

@@ -24,6 +24,7 @@ import com.example.mobileapp.activity.HomePharmaActivity;
 import com.example.mobileapp.activity.HomeUserActivity;
 import com.example.mobileapp.activity.LoginActivity;
 import com.example.mobileapp.activity.ambulance.AmbulanceActivity;
+import com.example.mobileapp.activity.user.UserActivity;
 import com.example.mobileapp.api.LocationAPI;
 import com.example.mobileapp.api.ProductAPI;
 import com.example.mobileapp.dto.LocationDTO;
@@ -185,7 +186,7 @@ public class ProductFormActivity extends AppCompatActivity implements ProductInt
             Intent intent = null;
             switch (ContantUtil.roleName) {
                 case "USER":
-                    intent = new Intent(getApplicationContext(), HomeUserActivity.class);
+                    intent = new Intent(getApplicationContext(), UserActivity.class);
                     break;
                 case "PHARMACY":
                     intent = new Intent(getApplicationContext(), PharmacyActivity.class);

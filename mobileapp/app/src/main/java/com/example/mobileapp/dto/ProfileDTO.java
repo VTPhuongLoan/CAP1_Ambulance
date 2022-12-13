@@ -9,6 +9,9 @@ public class ProfileDTO {
     private String address;
     private String numberPlate;
 
+    private String oldPass;
+    private String newPass;
+
     public long getAccountId() {
         return accountId;
     }
@@ -55,5 +58,21 @@ public class ProfileDTO {
 
     public void setNumberPlate(String numberPlate) {
         this.numberPlate = numberPlate;
+    }
+
+    public String getOldPass() {
+        return oldPass;
+    }
+
+    public void setOldPass(String oldPass) {
+        this.oldPass = oldPass;
+    }
+
+    public String getNewPass() {
+        return newPass;
+    }
+
+    public void setNewPass(String newPass) {
+        this.newPass = newPass;
     }
 }

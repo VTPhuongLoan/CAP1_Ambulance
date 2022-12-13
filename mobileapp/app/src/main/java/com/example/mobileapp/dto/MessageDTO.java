@@ -1,13 +1,12 @@
 package com.example.mobileapp.dto;
 
-import java.util.Date;
-
 public class MessageDTO {
 
     private String id;
     private String title;
     private String content;
-    private Date time;
+    private String time;
+    private String type;
 
     public String getId() {
         return id;
@@ -33,11 +32,19 @@ public class MessageDTO {
         this.content = content;
     }
 
-    public Date getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

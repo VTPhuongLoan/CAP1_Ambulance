@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/message")
@@ -96,8 +97,10 @@ public class MessageController {
                     }
                 }
 
+                UUID uuid = UUID.randomUUID();
+
                 NotificationRequestDTO notificationRequestDto = new NotificationRequestDTO();
-                notificationRequestDto.setTitle("||MSG||" + message.getTitle());
+                notificationRequestDto.setTitle(uuid + "||MSG||" + message.getTitle());
                 notificationRequestDto.setBody(message.getContent());
                 notificationRequestDto.setTargetMultiDevice(targetMultiDevice);
                 notificationService.sendMultiToDevice(notificationRequestDto);
