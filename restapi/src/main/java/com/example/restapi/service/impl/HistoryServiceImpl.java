@@ -5,6 +5,9 @@ import com.example.restapi.repository.HistoryRepository;
 import com.example.restapi.service.HistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class HistoryServiceImpl implements HistoryService {
@@ -13,6 +16,7 @@ public class HistoryServiceImpl implements HistoryService {
     private HistoryRepository historyRepository;
 
     @Override
+    @Transactional
     public History save(History history) {
         return historyRepository.save(history);
     }
@@ -23,8 +27,8 @@ public class HistoryServiceImpl implements HistoryService {
     }
 
     @Override
-    public History findByAmbulanceAndTime(long ambulanceId, String code) {
-        return historyRepository.findByAmbulanceAndTime(ambulanceId, code).orElse(null);
+    public List<History> findByAmbulanceAndTime(long ambulanceId, String code) {
+        return historyRepository.findByAmbulanceAndTime(ambulanceId, code);
     }
 
     @Override

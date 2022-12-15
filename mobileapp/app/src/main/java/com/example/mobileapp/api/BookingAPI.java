@@ -197,4 +197,38 @@ public class BookingAPI {
         });
     }
 
+    public void completed(long bookingId) {
+        String token = "bearer " + ContantUtil.accessToken;
+        apiService.bookingCompleted(token, bookingId).enqueue(new Callback<ReponseDTO>() {
+            @Override
+            public void onResponse(Call<ReponseDTO> call, Response<ReponseDTO> response) {
+                if (response.code() == 200) {
+                    ReponseDTO reponseDTO = response.body();
+                    if (reponseDTO.getStatus().equals(ReponseDTO.TypeResult.ERROR)) {
+                        Map<String, Object> messages = response.body().getMessages();
+                        List<String> errors = new ArrayList<>();
+                        if (messages != null) {
+                            for (Map.Entry<String, Object> entry : messages.entrySet()) {
+                                errors.add(entry.getValue().toString());
+                            }
+                        }
+                        bookingInterface.onError(errors);
+                    }
+
+                    if (reponseDTO.getStatus().equals(ReponseDTO.TypeResult.SUCCESS)) {
+                        List<Booking> bookingList = new ArrayList<>();
+                        bookingInterface.onListBooking(bookingList);
+                    }
+                } else {
+                    bookingInterface.onError(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ReponseDTO> call, Throwable t) {
+                bookingInterface.onError(null);
+            }
+        });
+    }
+
 }

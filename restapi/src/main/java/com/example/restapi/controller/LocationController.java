@@ -68,13 +68,12 @@ public class LocationController {
             return new ResponseEntity<RestReponseDTO>(restReponse, HttpStatus.OK);
         }
 
-        Location location = locationService.findById(locationDTO.getId());
+        Location location = locationService.findById(locationDTO.getAccountId());
 
         if (location == null) {
             location = new Location();
         }
 
-        location.setId( locationDTO.getId() );
         location.setLongitude( locationDTO.getLongitude() );
         location.setAccount(accountService.findById(locationDTO.getAccountId()));
         location.setLatitude( locationDTO.getLatitude());

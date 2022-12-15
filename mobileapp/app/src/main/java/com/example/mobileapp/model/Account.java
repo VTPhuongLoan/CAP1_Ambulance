@@ -12,6 +12,7 @@ public class Account {
     private String phone;
     private String roleName;
     private String address;
+    private String contact;
     private boolean status;
     private long locationId;
     private long roleId;
@@ -97,6 +98,14 @@ public class Account {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
     }
 
     public boolean isStatus() {

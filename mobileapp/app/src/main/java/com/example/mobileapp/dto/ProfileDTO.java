@@ -8,7 +8,7 @@ public class ProfileDTO {
     private String phone;
     private String address;
     private String numberPlate;
-
+    private String contact;
     private String oldPass;
     private String newPass;
 
@@ -58,6 +58,14 @@ public class ProfileDTO {
 
     public void setNumberPlate(String numberPlate) {
         this.numberPlate = numberPlate;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
     }
 
     public String getOldPass() {

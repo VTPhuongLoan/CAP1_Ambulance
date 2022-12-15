@@ -114,7 +114,7 @@
             android:layout_height="wrap_content"
             android:drawablePadding="16dp"
             android:hint="Password"
-            android:inputType="textPassword"
+            android:inputType="text"
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

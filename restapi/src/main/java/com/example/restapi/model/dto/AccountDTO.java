@@ -17,6 +17,7 @@ public class AccountDTO {
     private String phone;
     private String roleName;
     private String address;
+    private String contact;
     private boolean status;
     private long locationId;
     private LocationDTO location;

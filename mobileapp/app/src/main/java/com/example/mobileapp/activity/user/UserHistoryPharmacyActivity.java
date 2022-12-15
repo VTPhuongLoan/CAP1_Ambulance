@@ -134,7 +134,7 @@ public class UserHistoryPharmacyActivity extends AppCompatActivity implements Ch
             // Creating dialog box
             AlertDialog alert = builder.create();
             // Setting the title manually
-            alert.setTitle("Ambulance Booking");
+            alert.setTitle("Medical Service");
             alert.show();
         }
 

@@ -5,6 +5,7 @@ import com.example.mobileapp.dto.BookingDTO;
 import com.example.mobileapp.dto.MessageDTO;
 import com.example.mobileapp.dto.RegisterDTO;
 import com.example.mobileapp.model.Orders;
+import com.example.mobileapp.model.Pharmacy;
 import com.example.mobileapp.model.Product;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class ContantUtil {
     public static double longitude = 106.7735599;
 
     public static long pharmacyId = 0;
+    public static Pharmacy pharmacy = null;
 
     // order
     public static Orders orders = null;

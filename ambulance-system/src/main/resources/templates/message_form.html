@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Message | Ambulance App</title>
+    <title>Message | Medical Service</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -96,8 +96,7 @@
                                 <!-- /.card-body -->
                                 <div class="card-footer">
                                     <input type="hidden" name="id" class="form-control" th:field="*{id}">
-                                    <a type="button" class="btn btn-primary" href="/masterdata/message/" th:if="${messageManagerDTO.id > 0}">Back</a>
-                                    <button type="submit" class="btn btn-primary" th:if="${messageManagerDTO.id == 0}">Submit</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </form>
                         </div>

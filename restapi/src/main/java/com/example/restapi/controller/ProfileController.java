@@ -91,6 +91,7 @@ public class ProfileController {
             account.setEmail(profileDTO.getEmail());
             account.setPhone(profileDTO.getPhone());
             account.setAddress(profileDTO.getAddress());
+            account.setContact(profileDTO.getContact());
             accountService.save(account);
 
             // ambulance
@@ -104,6 +105,7 @@ public class ProfileController {
             Pharmacy pharmacy = pharmacyService.findByAccountId(account.getId());
             if (!ObjectUtils.isEmpty(pharmacy)) {
                 pharmacy.setName(profileDTO.getFullName());
+                pharmacy.setAddress(profileDTO.getAddress());
                 pharmacyService.save(pharmacy);
             }
         }

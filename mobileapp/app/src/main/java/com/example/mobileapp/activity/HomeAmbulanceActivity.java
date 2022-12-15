@@ -20,7 +20,6 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -45,7 +44,7 @@ import java.util.List;
 
 public class HomeAmbulanceActivity extends AppCompatActivity implements LocationInterface, LocationListener, BookingInterface {
 
-    TextView textNumberCar, textPoint, textLocation, btnViewList, btnMap;
+    TextView textNumberCar, textPoint, textLocation, btnViewList, btnMap, btnSubmit;
     Switch switchLocation;
 
     CountDownTimer countDownTimer = null;
@@ -60,6 +59,8 @@ public class HomeAmbulanceActivity extends AppCompatActivity implements Location
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 5; // 5 meters
     // The minimum time between updates in milliseconds
     private static final long MIN_TIME_BW_UPDATES = 1000 * 10 * 1; // 30s
+
+    Booking booking = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +135,38 @@ public class HomeAmbulanceActivity extends AppCompatActivity implements Location
                 startActivity(intent);
             }
         });
+
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // show message
+                AlertDialog.Builder builder = new AlertDialog.Builder(HomeAmbulanceActivity.this);
+                builder.setTitle("Medical Service");
+
+                // Setting message manually and performing action on button click
+                builder.setMessage("Are you want completed now?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // booking api
+                                BookingAPI bookingAPI = new BookingAPI(HomeAmbulanceActivity.this);
+                                bookingAPI.completed(booking.getId());
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                // Creating dialog box
+                AlertDialog alert = builder.create();
+                // Setting the title manually
+                alert.setTitle("Medical Service");
+                alert.show();
+            }
+        });
+
+        btnSubmit.setVisibility(View.INVISIBLE);
     }
 
     private void initView() {
@@ -143,6 +176,7 @@ public class HomeAmbulanceActivity extends AppCompatActivity implements Location
         textLocation = findViewById(R.id.textLocation);
         switchLocation = findViewById(R.id.switchLocation);
         btnMap = findViewById(R.id.btnMap);
+        btnSubmit = findViewById(R.id.btnSubmit);
 
         if (ContantUtil.authDTO.getNumberPlate() != null) {
             textNumberCar.setText("License plates: " + ContantUtil.authDTO.getNumberPlate());
@@ -156,15 +190,25 @@ public class HomeAmbulanceActivity extends AppCompatActivity implements Location
 
     @Override
     public void onBookingPending() {
-
+        // booking api
+        BookingAPI bookingAPI = new BookingAPI(HomeAmbulanceActivity.this);
+        bookingAPI.findAllBookingByAmbulanceAndProgress(Long.parseLong(ContantUtil.authDTO.getAccountId()));
     }
 
     @Override
     public void onListBooking(List<Booking> bookingList) {
         if (bookingList != null && !bookingList.isEmpty()) {
-            Booking booking = bookingList.get(0);
+            booking = bookingList.get(0);
             textPoint.setText(booking.getAccountDTO().getFullName() + " - " + booking.getAccountDTO().getPhone());
             textLocation.setText(booking.getNote());
+
+            btnSubmit.setVisibility(View.VISIBLE);
+        } else {
+            booking = null;
+            textPoint.setText("");
+            textLocation.setText("");
+
+            btnSubmit.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -184,7 +228,7 @@ public class HomeAmbulanceActivity extends AppCompatActivity implements Location
                 public void run() {
                     // show message
                     AlertDialog.Builder builder = new AlertDialog.Builder(HomeAmbulanceActivity.this);
-                    builder.setMessage(body).setTitle("Ambulance Booking");
+                    builder.setMessage(body).setTitle("Medical Service");
 
                     // Setting message manually and performing action on button click
                     builder.setMessage(body)
@@ -194,10 +238,12 @@ public class HomeAmbulanceActivity extends AppCompatActivity implements Location
                                     BookingDTO bookingDTO = new BookingDTO();
                                     bookingDTO.setHistoryId(Long.parseLong(title));
                                     bookingDTO.setAccountId(Long.parseLong(ContantUtil.authDTO.getAccountId()));
-                                    bookingDTO.setProgress("ACCEPTED");
+                                    bookingDTO.setProgress("APPROVED");
 
                                     BookingAPI bookingAPI = new BookingAPI(HomeAmbulanceActivity.this);
                                     bookingAPI.saveBooking(bookingDTO);
+
+                                    bookingAPI.findAllBookingByAmbulanceAndProgress(Long.parseLong(ContantUtil.authDTO.getAccountId()));
                                 }
                             })
                             .setNegativeButton("Skip", new DialogInterface.OnClickListener() {
@@ -216,7 +262,7 @@ public class HomeAmbulanceActivity extends AppCompatActivity implements Location
                     // Creating dialog box
                     AlertDialog alert = builder.create();
                     // Setting the title manually
-                    alert.setTitle("Ambulance Booking");
+                    alert.setTitle("Medical Service");
                     alert.show();
                 }
             });
@@ -253,9 +299,6 @@ public class HomeAmbulanceActivity extends AppCompatActivity implements Location
         Log.d("LOG_LOCATION", "Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
         ContantUtil.latitude = location.getLatitude();
         ContantUtil.longitude = location.getLongitude();
-
-        Toast.makeText(getApplicationContext(), "Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude(),
-                Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -280,6 +323,10 @@ public class HomeAmbulanceActivity extends AppCompatActivity implements Location
         if (ContantUtil.authDTO.getNumberPlate() != null) {
             textNumberCar.setText("License plates: " + ContantUtil.authDTO.getNumberPlate());
         }
+
+        // booking api
+        BookingAPI bookingAPI = new BookingAPI(HomeAmbulanceActivity.this);
+        bookingAPI.findAllBookingByAmbulanceAndProgress(Long.parseLong(ContantUtil.authDTO.getAccountId()));
     }
 
     private void setBookingActive(boolean isChecked) {
@@ -345,11 +392,32 @@ public class HomeAmbulanceActivity extends AppCompatActivity implements Location
             // Creating dialog box
             AlertDialog alert = builder.create();
             // Setting the title manually
-            alert.setTitle("Ambulance Booking");
+            alert.setTitle("Medical Service");
             alert.show();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setMessage("Do you want to exit?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        builder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert=builder.create();
+        alert.show();
     }
 
 }

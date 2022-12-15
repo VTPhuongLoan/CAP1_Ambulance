@@ -196,12 +196,25 @@ public class BookingController {
             return new ResponseEntity<RestReponseDTO>(restResponse, HttpStatus.NOT_FOUND);
         }
 
-        List<Booking> bookingList = bookingService.findAllByAmbulanceAndProgress(ambulance.getId(), "PENDING");
+        List<Booking> bookingList = bookingService.findAllByAmbulanceAndProgress(ambulance.getId(), "APPROVED");
         if (bookingList != null && !bookingList.isEmpty()) {
             restResponse.ok(bookingMapper.toListDTO(bookingList));
         } else {
             restResponse.fail();
         }
+
+        return new ResponseEntity<RestReponseDTO>(restResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/ambulance/progress/completed/{id}")
+    public ResponseEntity<RestReponseDTO> bookingCompleted(@PathVariable long id) {
+        RestReponseDTO restResponse = new RestReponseDTO();
+
+        Booking booking = bookingService.findById(id);
+        booking.setProgress("COMPLETED");
+        bookingService.save(booking);
+
+        restResponse.ok();
 
         return new ResponseEntity<RestReponseDTO>(restResponse, HttpStatus.OK);
     }

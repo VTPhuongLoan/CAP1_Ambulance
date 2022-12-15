@@ -47,6 +47,7 @@ public class AccountMapperImpl implements AccountMapper {
         accountDTO.setPassword("******");
         accountDTO.setPhone(account.getPhone());
         accountDTO.setAddress(account.getAddress());
+        accountDTO.setContact(account.getContact());
         accountDTO.setStatus(account.isStatus());
 
         // Role

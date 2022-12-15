@@ -39,6 +39,9 @@ public class Account extends BaseIdEntity implements UserDetails {
 	@Column(name = "address")
 	private String address;
 
+	@Column(name = "contact")
+	private String contact;
+
 	@Column(name = "token")
 	private String token;
 

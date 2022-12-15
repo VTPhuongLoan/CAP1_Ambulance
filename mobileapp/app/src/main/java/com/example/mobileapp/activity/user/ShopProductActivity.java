@@ -17,8 +17,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobileapp.R;
+import com.example.mobileapp.activity.ChatActivity;
 import com.example.mobileapp.activity.HomeUserActivity;
 import com.example.mobileapp.activity.LoginActivity;
+import com.example.mobileapp.activity.VideoCallActivity;
 import com.example.mobileapp.activity.ambulance.AmbulanceActivity;
 import com.example.mobileapp.activity.pharmacy.PharmacyActivity;
 import com.example.mobileapp.adapter.ShopProductAdapter;
@@ -65,6 +67,22 @@ public class ShopProductActivity extends AppCompatActivity implements ProductInt
                 Bundle bundle = new Bundle();
                 bundle.putLong("pharmacyId", pharmacyId);
                 i.putExtras(bundle);
+                startActivity(i);
+            }
+        });
+
+        FloatingActionButton myFabVideo = (FloatingActionButton) findViewById(R.id.btnVideo);
+        myFabVideo.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), VideoCallActivity.class);
+                startActivity(i);
+            }
+        });
+
+        FloatingActionButton myFabChat = (FloatingActionButton) findViewById(R.id.btnChat);
+        myFabChat.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), ChatActivity.class);
                 startActivity(i);
             }
         });
@@ -139,7 +157,7 @@ public class ShopProductActivity extends AppCompatActivity implements ProductInt
             // Creating dialog box
             AlertDialog alert = builder.create();
             // Setting the title manually
-            alert.setTitle("Ambulance Booking");
+            alert.setTitle("Medical Service");
             alert.show();
         }
 

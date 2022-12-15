@@ -13,12 +13,11 @@
 
     <ImageView
         android:id="@+id/picCard"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,11 +26,11 @@
 
     <TextView
         android:id="@+id/textName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="title"
+        android:paddingLeft="55dp"
+        android:text="How to get previous page URL from request using a servlet"
         android:textStyle="bold"
         android:textSize="20sp"
         android:textColor="#373b54"
@@ -40,10 +39,11 @@
 
     <TextView
         android:id="@+id/textAddress"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="Address"
+        android:paddingLeft="55dp"
+        android:text="How do I get the previous page URL from request using a servlet. For example, I'm from the index.html and I submitted a form from index, how do I get the index.html URL and use it in a servlet?"
         android:textColor="#373b54"
         android:textSize="18sp"
         android:layout_marginBottom="15dp"

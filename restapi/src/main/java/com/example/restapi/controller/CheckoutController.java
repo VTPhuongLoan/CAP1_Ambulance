@@ -65,10 +65,18 @@ public class CheckoutController {
                     if (bookingList == null || bookingList.isEmpty()) {
                         Ambulance ambu = ambulanceService.findByAccount(location.getAccount());
                         if (ambu != null) {
-                            History history = historyService.findByAmbulanceAndTime(ambu.getId(), bookingDTO.getUuid());
-                            if (history == null || !history.getProgress().equalsIgnoreCase("PENDING")) {
+                            List<History> historyList = historyService.findByAmbulanceAndTime(ambu.getId(), bookingDTO.getUuid());
+                            if (historyList == null || historyList.isEmpty()) {
                                 ambulance = location.getAccount();
                                 break;
+                            } else {
+                                for (History history : historyList) {
+                                    if (history != null && !history.getProgress().equalsIgnoreCase("PENDING")
+                                            && !history.getProgress().equalsIgnoreCase("CANCELED")) {
+                                        ambulance = location.getAccount();
+                                        break;
+                                    }
+                                }
                             }
                         }
                     }
@@ -85,8 +93,6 @@ public class CheckoutController {
             history.setCode(bookingDTO.getUuid());
             history.setStatus(true);
             historyService.save(history);
-
-            Account booking = accountService.findById(bookingDTO.getAccountId());
 
             UUID uuid = UUID.randomUUID();
 
@@ -122,23 +128,25 @@ public class CheckoutController {
         if (bookingDTO.getProgress().equalsIgnoreCase("COMPLETED")) {
             progress = "COMPLETED";
         }
-        if (bookingDTO.getProgress().equalsIgnoreCase("CANCELED")) {
-            progress = "CANCELED";
+        if (bookingDTO.getProgress().equalsIgnoreCase("APPROVED")) {
+            progress = "APPROVED";
         }
 
-        Booking booking = bookingService.findById(bookingDTO.getId());
-        if (booking == null) {
-            booking = new Booking();
-        }
-        booking.setTimeOrder(new Date());
-        booking.setNote(history.getNote());
-        booking.setProgress(progress);
-        booking.setAmbulance(ambulance);
-        booking.setAccount(account);
-        booking.setStatus(true);
-        bookingService.save(booking);
+        if (progress != "CANCELED") {
+            Booking booking = new Booking();
+            booking.setTimeOrder(new Date());
+            booking.setNote(history.getNote());
+            booking.setProgress(progress);
+            booking.setAmbulance(ambulance);
+            booking.setAccount(account);
+            booking.setStatus(true);
+            bookingService.save(booking);
 
-        restResponse.ok(booking);
+            restResponse.ok(booking);
+        } else {
+            restResponse.ok();
+        }
+
         return new ResponseEntity<RestReponseDTO>(restResponse, HttpStatus.OK);
     }
 

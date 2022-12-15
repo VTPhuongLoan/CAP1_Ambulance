@@ -15,11 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.mobileapp.R;
-import com.example.mobileapp.activity.HomeUserActivity;
 import com.example.mobileapp.activity.LoginActivity;
 import com.example.mobileapp.activity.PasswordActivity;
 import com.example.mobileapp.activity.ambulance.AmbulanceActivity;
-import com.example.mobileapp.activity.pharmacy.PharmacyActivity;
 import com.example.mobileapp.api.ProfileAPI;
 import com.example.mobileapp.dto.ProfileDTO;
 import com.example.mobileapp.itf.ProfileInterface;
@@ -31,7 +29,7 @@ import java.util.List;
 public class UserActivity extends AppCompatActivity implements ProfileInterface {
 
     TextView textHello, textMsg, btnSubmit, textChangePass;
-    EditText inputFullName, inputEmail, inputPhone, inputAddress;
+    EditText inputFullName, inputEmail, inputPhone, inputAddress, inputContact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +68,7 @@ public class UserActivity extends AppCompatActivity implements ProfileInterface 
                 String email = inputEmail.getText().toString();
                 String phone = inputPhone.getText().toString();
                 String address = inputAddress.getText().toString();
+                String contact = inputContact.getText().toString();
 
                 ProfileDTO profileDTO = new ProfileDTO();
                 profileDTO.setAccountId(Long.parseLong(ContantUtil.authDTO.getAccountId()));
@@ -77,6 +76,7 @@ public class UserActivity extends AppCompatActivity implements ProfileInterface 
                 profileDTO.setEmail(email);
                 profileDTO.setPhone(phone);
                 profileDTO.setAddress(address);
+                profileDTO.setContact(contact);
 
                 ProfileAPI profileAPI = new ProfileAPI(UserActivity.this);
                 profileAPI.updateProfile(profileDTO);
@@ -100,6 +100,7 @@ public class UserActivity extends AppCompatActivity implements ProfileInterface 
         inputEmail = findViewById(R.id.inputEmail);
         inputPhone = findViewById(R.id.inputPhone);
         inputAddress = findViewById(R.id.inputAddress);
+        inputContact = findViewById(R.id.inputContact);
         textChangePass = findViewById(R.id.textChangePass);
     }
 
@@ -108,6 +109,7 @@ public class UserActivity extends AppCompatActivity implements ProfileInterface 
         inputEmail.setText(account.getEmail());
         inputPhone.setText(account.getPhone());
         inputAddress.setText(account.getAddress());
+        inputContact.setText(account.getContact());
         textHello.setText("Hi! " + account.getFullName());
     }
 
@@ -192,7 +194,7 @@ public class UserActivity extends AppCompatActivity implements ProfileInterface 
             // Creating dialog box
             AlertDialog alert = builder.create();
             // Setting the title manually
-            alert.setTitle("Ambulance Booking");
+            alert.setTitle("Medical Service");
             alert.show();
         }
 

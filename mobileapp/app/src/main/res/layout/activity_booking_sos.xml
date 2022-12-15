@@ -27,7 +27,7 @@
         android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="AMBULANCE BOOKING"
+        android:text="Medical Service"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="30sp"
@@ -40,7 +40,7 @@
         android:id="@+id/textTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="60"
+        android:text="30"
         android:textColor="#FF0000"
         android:textStyle="bold"
         android:textSize="60sp"
@@ -49,21 +49,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageView1" />
 
-<!--    <Button-->
-<!--        android:id="@+id/btnSubmit"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="100dp"-->
-<!--        android:layout_marginTop="80dp"-->
-<!--        android:layout_marginEnd="100dp"-->
-<!--        android:background="@drawable/btn_getstart"-->
-<!--        android:text="New Request"-->
-<!--        android:textColor="@android:color/white"-->
-<!--        android:textSize="18sp"-->
-<!--        android:textStyle="bold"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/textTime" />-->
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="100dp"
+        android:background="@drawable/btn_getstart"
+        android:text="Resend request"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textTime" />
 
     <Button
         android:id="@+id/btnCancel"
@@ -72,7 +72,7 @@
         android:layout_marginStart="100dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="100dp"
-        android:background="@drawable/btn_getstart"
+        android:background="@drawable/btn_cancle"
         android:text="Cancel"
         android:textColor="@android:color/white"
         android:textSize="18sp"

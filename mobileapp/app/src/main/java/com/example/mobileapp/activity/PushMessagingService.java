@@ -49,6 +49,17 @@ public class PushMessagingService extends FirebaseMessagingService {
         }
 
         if (!ContantUtil.checkMessage(stKey)) {
+            if (stType.contains("BOOKING")) {
+                Intent intent = new Intent("MyMessage");
+                intent.putExtra("title", stTitle);
+                intent.putExtra("body", body);
+                broadcaster.sendBroadcast(intent);
+            }
+
+            if (stType.contains("BOOKING")) {
+                stTitle = "Medical Service";
+            }
+
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
                     "Message Notification",
                     NotificationManager.IMPORTANCE_HIGH);
@@ -60,12 +71,7 @@ public class PushMessagingService extends FirebaseMessagingService {
                     .setAutoCancel(true);
             NotificationManagerCompat.from(this).notify(1, notiBuilder.build());
 
-            if (stType.contains("BOOKING")) {
-                Intent intent = new Intent("MyMessage");
-                intent.putExtra("title", stTitle);
-                intent.putExtra("body", body);
-                broadcaster.sendBroadcast(intent);
-            }
+
 
             Date date = new Date();
             SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");

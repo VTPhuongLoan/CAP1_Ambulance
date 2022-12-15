@@ -42,7 +42,7 @@
         android:id="@+id/dateItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="8dp"
         android:text="12/02/2021"
         android:textColor="#373b54"
         android:textSize="18sp"

@@ -19,7 +19,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -47,7 +46,7 @@ import java.util.Locale;
 public class AmbulanceBookingSosActivity extends AppCompatActivity implements CheckoutInterface, BookingInterface, LocationListener {
 
     Button btncancel;
-//    Button btnSubmit;
+    Button btnSubmit;
     TextView textTime;
 
     CountDownTimer countDownTimer = null;
@@ -106,7 +105,7 @@ public class AmbulanceBookingSosActivity extends AppCompatActivity implements Ch
 
 //        btnSubmit.setVisibility(View.INVISIBLE);
 
-        countDownTimer = new CountDownTimer(60000, 1000) {
+        countDownTimer = new CountDownTimer(30000, 1000) {
             public void onTick(long millisUntilFinished) {
                 textTime.setText(String.valueOf(millisUntilFinished / 1000));
 
@@ -132,41 +131,42 @@ public class AmbulanceBookingSosActivity extends AppCompatActivity implements Ch
             }
         });
 
-//        btnSubmit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                countDownTimer.cancel();
-//
-//                btnSubmit.setVisibility(View.INVISIBLE);
-//
-//                BookingDTO bookingDTO = new BookingDTO();
-//                bookingDTO.setAccountId(Long.parseLong(ContantUtil.authDTO.getAccountId()));
-//                bookingDTO.setUuid(ContantUtil.bookingDTO.getUuid());
-//                bookingDTO.setLatitude(latitude);
-//                bookingDTO.setLongitude(longitude);
-//
-//                CheckoutAPI checkoutAPI = new CheckoutAPI(AmbulanceBookingSosActivity.this);
-//                checkoutAPI.findBooking(bookingDTO);
-//
-//                countDownTimer = new CountDownTimer(60000, 1000) {
-//                    public void onTick(long millisUntilFinished) {
-//                        textTime.setText(String.valueOf(millisUntilFinished / 1000));
-//
-//                        fetchBooking();
-//                    }
-//
-//                    public void onFinish() {
-//                        btnSubmit.setVisibility(View.VISIBLE);
-//                        textTime.setText("NOT FOUND");
-//                    }
-//                };
-//                countDownTimer.start();
-//            }
-//        });
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                countDownTimer.cancel();
+
+                btnSubmit.setVisibility(View.INVISIBLE);
+
+                BookingDTO bookingDTO = new BookingDTO();
+                bookingDTO.setAccountId(Long.parseLong(ContantUtil.authDTO.getAccountId()));
+                bookingDTO.setUuid(ContantUtil.bookingDTO.getUuid());
+                bookingDTO.setLatitude(latitude);
+                bookingDTO.setLongitude(longitude);
+                bookingDTO.setNote(ContantUtil.bookingDTO.getNote());
+
+                CheckoutAPI checkoutAPI = new CheckoutAPI(AmbulanceBookingSosActivity.this);
+                checkoutAPI.findBooking(bookingDTO);
+
+                countDownTimer = new CountDownTimer(30000, 1000) {
+                    public void onTick(long millisUntilFinished) {
+                        textTime.setText(String.valueOf(millisUntilFinished / 1000));
+
+                        fetchBooking();
+                    }
+
+                    public void onFinish() {
+                        btnSubmit.setVisibility(View.VISIBLE);
+                        textTime.setText("NOT FOUND");
+                    }
+                };
+                countDownTimer.start();
+            }
+        });
     }
 
     private void initView() {
-//        btnSubmit = findViewById(R.id.btnSubmit);
+        btnSubmit = findViewById(R.id.btnSubmit);
         btncancel = findViewById(R.id.btnCancel);
         textTime = findViewById(R.id.textTime);
     }
@@ -233,7 +233,6 @@ public class AmbulanceBookingSosActivity extends AppCompatActivity implements Ch
             String state = addresses.get(0).getAdminArea();
             String country = addresses.get(0).getCountryName();
             String postalCode = addresses.get(0).getPostalCode();
-            Toast.makeText(getApplicationContext(), "country: " + addresses.get(0).getCountryName(), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -306,7 +305,7 @@ public class AmbulanceBookingSosActivity extends AppCompatActivity implements Ch
             // Creating dialog box
             AlertDialog alert = builder.create();
             // Setting the title manually
-            alert.setTitle("Ambulance Booking");
+            alert.setTitle("Medical Service");
             alert.show();
         }
 

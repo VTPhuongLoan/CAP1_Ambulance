@@ -58,19 +58,6 @@
                     app:layout_constraintTop_toTopOf="@id/ContraintSearch"
                     app:layout_constraintVertical_bias="1" />
 
-                <TextView
-                    android:id="@+id/emptyTxt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Không có sản phẩm nào"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewSearch"
                     android:layout_width="match_parent"
@@ -96,7 +83,7 @@
         android:elevation="3dp"
         android:src="@drawable/icon_cart_x512"
         app:backgroundTint="@color/white"
-        app:maxImageSize="40dp"
+        app:maxImageSize="38dp"
         app:tint="@color/blue_400"
         android:scaleType="center"
         android:layout_marginBottom="50dp"
@@ -105,5 +92,37 @@
         app:layout_anchorGravity="bottom|right|end"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnVideo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="3dp"
+        android:src="@drawable/icon_videocall_x512"
+        app:backgroundTint="@color/white"
+        app:maxImageSize="38dp"
+        app:tint="@color/red"
+        android:scaleType="center"
+        android:layout_marginRight="-80dp"
+        android:layout_marginBottom="130dp"
+        app:layout_anchorGravity="bottom|left|end"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnChat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="3dp"
+        app:backgroundTint="@color/white"
+        app:maxImageSize="35dp"
+        app:tint="@android:color/holo_red_dark"
+        android:src="@drawable/icon_chat_x512"
+        android:scaleType="center"
+        android:layout_marginRight="-80dp"
+        android:layout_marginBottom="50dp"
+        app:layout_anchorGravity="bottom|left|end"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

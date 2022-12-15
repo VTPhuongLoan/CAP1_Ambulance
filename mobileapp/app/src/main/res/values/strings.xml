@@ -14,8 +14,10 @@
     <string name="account.email.notExists">Email does not exist</string>
 
     <string name="ad">Hello Nguyen Van Nam</string>
-    <string name="at">"Attensive care, enthusiastic listening"</string>
+    <string name="at">Attensive care, enthusiastic listening</string>
     <string name="medical">Medical Service recommends that you set a strong password (Over 8 characters, including letters, number,special character)</string>
+    <string name="video_call_title">Welcome to medical Service\'s Online pharmacist</string>
+    <string name="video_call_content">Calling the pharmacist is a completely free service. Here you will be consulted by professional and experienced pharmacists in supporting health problem and drug use notes:</string>
 
     <string name="api_key">AIzaSyD04Zyg6POOnly4n0KyoySEHbEgcno1ejQ</string>
 

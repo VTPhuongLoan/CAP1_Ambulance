@@ -97,6 +97,9 @@ public interface APIService {
     @GET("/api/bookings/ambulance/progress/{id}")
     Call<ReponseDTO<List<Booking>>> findAllBookingByAmbulanceAndProgress(@Header("Authorization") String token, @Path("id") long id);
 
+    @GET("/api/bookings/ambulance/progress/completed/{id}")
+    Call<ReponseDTO> bookingCompleted(@Header("Authorization") String token, @Path("id") long id);
+
     @DELETE("/api/product/id/{id}")
     Call<ReponseDTO> deleteProduct(@Header("Authorization") String token, @Path("id") long id);
 

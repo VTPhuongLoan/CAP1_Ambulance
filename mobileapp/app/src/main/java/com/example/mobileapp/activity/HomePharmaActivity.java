@@ -22,7 +22,8 @@ import com.example.mobileapp.util.ContantUtil;
 
 public class HomePharmaActivity extends AppCompatActivity {
 
-    LinearLayout btnpharma,btnperson,btnbill;
+    LinearLayout btnpharma, btnperson, btnbill;
+    LinearLayout btnVideoCall, btnChat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,12 +69,30 @@ public class HomePharmaActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btnVideoCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomePharmaActivity.this, VideoCallActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomePharmaActivity.this, ChatActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initView() {
         btnpharma = findViewById(R.id.pharma);
         btnperson = findViewById(R.id.personbtn);
         btnbill = findViewById(R.id.billbtn);
+        btnVideoCall = findViewById(R.id.btnVideoCall);
+        btnChat = findViewById(R.id.btnChat);
     }
 
     @Override
@@ -132,11 +151,33 @@ public class HomePharmaActivity extends AppCompatActivity {
             // Creating dialog box
             AlertDialog alert = builder.create();
             // Setting the title manually
-            alert.setTitle("Ambulance Booking");
+            alert.setTitle("Medical Service");
             alert.show();
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setMessage("Do you want to exit?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        builder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert=builder.create();
+        alert.show();
+    }
+
 
 }

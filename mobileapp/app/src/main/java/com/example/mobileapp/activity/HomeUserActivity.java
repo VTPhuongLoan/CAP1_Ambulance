@@ -8,11 +8,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.mobileapp.R;
 import com.example.mobileapp.activity.ambulance.AmbulanceActivity;
@@ -21,7 +19,6 @@ import com.example.mobileapp.activity.pharmacy.PharmacyActivity;
 import com.example.mobileapp.activity.user.ShopPharmacyActivity;
 import com.example.mobileapp.activity.user.UserActivity;
 import com.example.mobileapp.activity.user.UserBookAmbulanceActivity;
-import com.example.mobileapp.activity.user.UserCheckoutActivity;
 import com.example.mobileapp.activity.user.UserHistoryBookingActivity;
 import com.example.mobileapp.activity.user.UserHistoryPharmacyActivity;
 import com.example.mobileapp.util.ContantUtil;
@@ -184,11 +181,33 @@ public class HomeUserActivity extends AppCompatActivity {
             // Creating dialog box
             AlertDialog alert = builder.create();
             // Setting the title manually
-            alert.setTitle("Ambulance Booking");
+            alert.setTitle("Medical Service");
             alert.show();
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setMessage("Do you want to exit?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        builder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert=builder.create();
+        alert.show();
+    }
+
 
 }

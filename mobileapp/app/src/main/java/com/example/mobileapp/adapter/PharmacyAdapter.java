@@ -20,6 +20,7 @@ import com.example.mobileapp.activity.pharmacy.ProductListActivity;
 import com.example.mobileapp.activity.user.ShopProductActivity;
 import com.example.mobileapp.model.Pharmacy;
 import com.example.mobileapp.model.Product;
+import com.example.mobileapp.util.ContantUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,8 @@ public class PharmacyAdapter extends RecyclerView.Adapter<PharmacyAdapter.Viewho
         holder.mainView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ContantUtil.pharmacy = pharmacy;
+
                 Intent i = new Intent(context, ShopProductActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.putExtra("pharmacyId", pharmacy.getId());
